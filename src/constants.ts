@@ -1,0 +1,5 @@
+export const WIDTH = 320,
+  HALF_WIDTH = WIDTH / 2,
+  HEIGHT = 400,
+  HALF_HEIGHT = HEIGHT / 2,
+  TILE_SIZE = 32
