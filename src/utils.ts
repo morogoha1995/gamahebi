@@ -1,13 +1,13 @@
 import { WIDTH, HEIGHT } from "./constants"
 
 export const determineZoom = (width: number, height: number): number => {
-  const zooms = [2, 1.75, 1.5, 1.25]
+  const zooms = [1, 0.75]
 
   for (let zoom of zooms)
     if (width > WIDTH * zoom && height > HEIGHT * zoom)
       return zoom
 
-  return 1
+  return 0.5
 }
 
 export const createFontStyle = (color: string, fontSize = 24, isStroke = true) => {
