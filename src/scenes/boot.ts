@@ -7,7 +7,7 @@ export class Boot extends Phaser.Scene {
 
   preload() {
     this.load
-      .spritesheet("tiles", "assets/imgs/tiles.png", { frameWidth: 64, frameHeight: 64 })
+      .spritesheet("tiles", "assets/imgs/tiles.png", { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE })
   }
 
   create() {
