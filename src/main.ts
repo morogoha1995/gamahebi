@@ -2,7 +2,7 @@ import Phaser from "phaser"
 import { WIDTH, HEIGHT } from "./constants"
 import { determineZoom } from "./utils"
 import { Boot } from "./scenes/boot"
-
+import { Game } from "./scenes/game"
 
 window.onload = () => {
   const zoom = determineZoom(window.innerWidth, window.innerHeight)
@@ -16,9 +16,10 @@ window.onload = () => {
     physics: {
       default: "arcade"
     },
-    backgroundColor: "#202020",
+    backgroundColor: "#4DB6AC",
     scene: [
-      Boot
+      Boot,
+      Game,
     ]
   })
 }
