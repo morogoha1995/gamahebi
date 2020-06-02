@@ -18,8 +18,4 @@ export class Snake extends Phaser.GameObjects.Image {
 
     this.body.setVelocityY(this.speed)
   }
-
-  move() {
-
-  }
 }
