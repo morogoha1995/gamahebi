@@ -2,7 +2,7 @@ import { SnakeGroup } from "./snakeGroup"
 import { SnakeName } from "../../../types/snake"
 
 export class Wave {
-  private current = 0
+  private current = 1
   private spawnCount = 0
   snakeGroup: SnakeGroup
 
@@ -34,7 +34,7 @@ export class Wave {
     if (this.spawnCount % 3 === 0)
       enemyIndex++
     // enemyNamesの要素数を超えないように低い方を代入し直す。
-    enemyIndex = Math.min(enemyIndex, enemyNames.length)
+    enemyIndex = Math.min(enemyIndex, enemyNames.length - 1)
 
     return enemyNames[enemyIndex]
   }

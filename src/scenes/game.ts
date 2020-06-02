@@ -15,5 +15,7 @@ export class Game extends Phaser.Scene {
     this.field = new Field(this)
     this.frogGroup = new FrogGroup(this)
     this.wave = new Wave(this)
+
+    this.wave.makeSnake()
   }
 }
