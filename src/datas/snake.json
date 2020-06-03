@@ -1,6 +1,7 @@
 {
   "normal": {
     "hp": 10,
-    "speed": 50
+    "speed": 50,
+    "col": 1
   }
 }

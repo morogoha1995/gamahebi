@@ -33,7 +33,6 @@ export class Shop {
           .setSize(SIDE_BAR_WIDTH, height)
           .setInteractive()
 
-
       this.frogs[key] = container
       y += height + padding
     }

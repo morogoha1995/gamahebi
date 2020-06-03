@@ -14,7 +14,7 @@ export class SnakeGroup extends Phaser.GameObjects.Group {
   }
 
   private determineSpawnX(): number {
-    return SIDE_BAR_WIDTH + HALF_TILE_SIZE + TILE_SIZE * this.determineSpawnCol()
+    return SIDE_BAR_WIDTH + TILE_SIZE * this.determineSpawnCol()
   }
 
   // 蛇をどの列に生成するかを割り出すメソッド

@@ -2,7 +2,6 @@ import { Field } from "../objects/field"
 import { FrogGroup } from "../objects/frog/frogGroup"
 import { Wave } from "../objects/snake/wave"
 import { Shop } from "../objects/shop"
-import { FrogName } from "../../types/frog"
 import { Frog } from "../objects/frog/frog"
 
 export class Game extends Phaser.Scene {
@@ -11,6 +10,7 @@ export class Game extends Phaser.Scene {
   private wave!: Wave
   private shop!: Shop
   private selectedFrog: Phaser.GameObjects.Image | null = null
+  private frogSample: Phaser.GameObjects.Image | null = null
 
   constructor() {
     super({ key: "game" })
@@ -38,7 +38,12 @@ export class Game extends Phaser.Scene {
   }
 
   private selectFrog(key: string, x: number, y: number) {
-    this.selectedFrog = this.add.image(x, y, key).setName(key)
+    this.selectedFrog = this.add.image(x, y, key)
+      .setName(key)
+      .setDepth(30)
+    this.frogSample = this.add.image(0, 0, key)
+      .setAlpha(0.6)
+      .setVisible(false)
   }
 
   private removeFrog() {
@@ -47,20 +52,24 @@ export class Game extends Phaser.Scene {
 
     this.selectedFrog?.destroy()
     this.selectedFrog = null
+    this.frogSample?.destroy()
+    this.frogSample = null
   }
 
   private moveSelectedFrog(x: number, y: number) {
-    if (this.selectFrog !== null)
-      this.selectedFrog?.setPosition(x, y)
+    if (!this.selectFrog)
+      return
 
-    /* TODO
+    this.selectedFrog?.setPosition(x, y)
+
+
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
     if (!tile)
       return
 
-    tile.setAlpha(0.5)
-    */
+    this.frogSample?.setPosition(tile.getCenterX(), tile.getCenterY())
+      .setVisible(true)
   }
 
   private putSelectedFrog(x: number, y: number) {
@@ -73,7 +82,6 @@ export class Game extends Phaser.Scene {
       return
 
     this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), this.selectedFrog.name))
-    this.selectedFrog?.destroy()
-    this.selectedFrog = null
+    this.removeFrog()
   }
 }
