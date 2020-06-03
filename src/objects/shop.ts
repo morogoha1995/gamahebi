@@ -1,11 +1,11 @@
 import frogDatas from "../datas/frog/base.json"
-import { FrogName } from "../../types/frog"
+import { Frogs } from "../../types/frog"
 import { SIDE_BAR_WIDTH } from "../constants"
 import { createFontStyle } from "../utils"
 
 export class Shop {
   private gold = 50
-  private frogs: { [key: string]: Phaser.GameObjects.Container } = {}
+  private frogs: Frogs = {}
 
   constructor(scene: Phaser.Scene) {
     // 武器一覧の表示
@@ -37,5 +37,9 @@ export class Shop {
       this.frogs[key] = container
       y += height + padding
     }
+  }
+
+  getFrogs(): Frogs {
+    return this.frogs
   }
 }

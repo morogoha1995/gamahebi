@@ -12,7 +12,7 @@ export class Field {
     [1, 0, 1, 0, 1],
   ]
 
-  private layer: Phaser.Tilemaps.StaticTilemapLayer
+  layer: Phaser.Tilemaps.StaticTilemapLayer
 
   constructor(scene: Phaser.Scene) {
     const map = scene.make.tilemap({ data: this.indexes, tileWidth: TILE_SIZE, tileHeight: TILE_SIZE })

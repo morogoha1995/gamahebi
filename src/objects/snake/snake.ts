@@ -12,6 +12,8 @@ export class Snake extends Phaser.GameObjects.Image {
     scene.add.existing(this)
     scene.physics.world.enable(this)
 
+    this.setDepth(20)
+
     const sd = SnakeDatas[name]
     this.hp = sd.hp
     this.speed = sd.speed
