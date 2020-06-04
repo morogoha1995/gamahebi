@@ -62,26 +62,30 @@ export class Game extends Phaser.Scene {
 
     this.selectedFrog?.setPosition(x, y)
 
-
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
     if (!tile)
       return
 
-    this.frogSample?.setPosition(tile.getCenterX(), tile.getCenterY())
-      .setVisible(true)
+    if (this.field.canPutFrog(tile.y, tile.x))
+      this.frogSample?.setPosition(tile.getCenterX(), tile.getCenterY())
+        .setVisible(true)
+    else
+      this.frogSample?.setVisible(false)
   }
 
   private putSelectedFrog(x: number, y: number) {
     if (!this.selectedFrog)
       return
 
+    const name = this.selectedFrog.name
+    this.removeFrog()
+
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
-    if (!tile)
-      return
-
-    this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), this.selectedFrog.name))
-    this.removeFrog()
+    if (tile && this.field.canPutFrog(tile.y, tile.x)) {
+      this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name))
+      this.field.putFrog(tile.y, tile.x)
+    }
   }
 }
