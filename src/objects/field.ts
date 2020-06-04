@@ -37,11 +37,9 @@ export class Field {
 
     const index = this.getIndex(x, y)
 
-    console.log(index)
-
     return {
-      x: TILE_SIZE * index.x + HALF_TILE_SIZE + SIDE_BAR_WIDTH,
-      y: TILE_SIZE * index.y + HALF_TILE_SIZE
+      x: this.calcTileCenterPos(index.x) + SIDE_BAR_WIDTH,
+      y: this.calcTileCenterPos(index.y)
     }
   }
 
@@ -53,6 +51,10 @@ export class Field {
 
     const index = this.getIndex(x, y)
     return this.map[index.y][index.x] === 0
+  }
+
+  private calcTileCenterPos(index: number): number {
+    return TILE_SIZE * index + HALF_TILE_SIZE
   }
 
   private getIndex(x: number, y: number) {
