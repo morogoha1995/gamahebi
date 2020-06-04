@@ -63,12 +63,12 @@ export class Game extends Phaser.Scene {
     this.selectedFrog?.setPosition(x, y)
 
 
-    const tile = this.field.layer.getTileAtWorldXY(x, y)
+    const pos = this.field.getTileCenterPos(x, y)
 
-    if (!tile)
+    if (!pos)
       return
 
-    this.frogSample?.setPosition(tile.getCenterX(), tile.getCenterY())
+    this.frogSample?.setPosition(pos.x, pos.y)
       .setVisible(true)
   }
 
@@ -76,12 +76,12 @@ export class Game extends Phaser.Scene {
     if (!this.selectedFrog)
       return
 
-    const tile = this.field.layer.getTileAtWorldXY(x, y)
+    const pos = this.field.getTileCenterPos(x, y)
 
-    if (!tile)
+    if (!pos)
       return
 
-    this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), this.selectedFrog.name))
+    this.frogGroup.add(new Frog(this, pos.x, pos.y, this.selectedFrog.name))
     this.removeFrog()
   }
 }
