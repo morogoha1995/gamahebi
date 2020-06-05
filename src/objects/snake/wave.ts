@@ -4,21 +4,22 @@ import { SnakeName } from "../../../types/snake"
 export class Wave {
   private current = 1
   private spawnCount = 0
+  private nextSpawn = 0
   snakeGroup: SnakeGroup
 
   constructor(scene: Phaser.Scene) {
     this.snakeGroup = new SnakeGroup(scene)
   }
 
-  move() {
-    this.snakeGroup.children.iterate((e: any) => {
-      e.move()
-    })
-  }
-
-  makeSnake() {
+  private makeSnake() {
     const snakeName = this.determineSnakeName()
     this.snakeGroup.spawn(snakeName)
+
+  }
+
+  update() {
+    if (this.snakeGroup.canSpawn())
+      this.makeSnake()
   }
 
   private determineSnakeName(): SnakeName {

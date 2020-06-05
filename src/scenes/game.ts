@@ -27,12 +27,15 @@ export class Game extends Phaser.Scene {
     this.wave = new Wave(this)
     this.shop = new Shop(this)
 
+    // Add collision
+    this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hit)
 
     this.addEvents()
-    this.wave.makeSnake()
   }
 
   update() {
+    this.wave.update()
+
     this.checkFrogAttack()
   }
 
@@ -96,6 +99,11 @@ export class Game extends Phaser.Scene {
       this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name))
       this.field.putFrog(tile.y, tile.x)
     }
+  }
+
+  private hit(snake: any, bullet: any) {
+    bullet.destroy()
+    snake.destroy()
   }
 
   private checkFrogAttack() {
