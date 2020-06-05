@@ -3,10 +3,14 @@ import { FrogGroup } from "../objects/frog/frogGroup"
 import { Wave } from "../objects/snake/wave"
 import { Shop } from "../objects/shop"
 import { Frog } from "../objects/frog/frog"
+import { FrogName } from "../../types/frog"
+import { BulletGroup } from "../objects/bullet/bulletGroup"
+import { Bullet } from "../objects/bullet/bullet"
 
 export class Game extends Phaser.Scene {
   private field!: Field
   private frogGroup!: FrogGroup
+  private bulletGroup!: BulletGroup
   private wave!: Wave
   private shop!: Shop
   private selectedFrog: Phaser.GameObjects.Image | null = null
@@ -19,12 +23,17 @@ export class Game extends Phaser.Scene {
   create() {
     this.field = new Field(this)
     this.frogGroup = new FrogGroup(this)
+    this.bulletGroup = new BulletGroup(this)
     this.wave = new Wave(this)
     this.shop = new Shop(this)
 
 
     this.addEvents()
     this.wave.makeSnake()
+  }
+
+  update() {
+    this.checkFrogAttack()
   }
 
   private addEvents() {
@@ -78,7 +87,7 @@ export class Game extends Phaser.Scene {
     if (!this.selectedFrog)
       return
 
-    const name = this.selectedFrog.name
+    const name = <FrogName>this.selectedFrog.name
     this.removeFrog()
 
     const tile = this.field.layer.getTileAtWorldXY(x, y)
@@ -87,5 +96,12 @@ export class Game extends Phaser.Scene {
       this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name))
       this.field.putFrog(tile.y, tile.x)
     }
+  }
+
+  private checkFrogAttack() {
+    this.frogGroup.children.iterate((f: any) => {
+      if (f.canAttack())
+        this.bulletGroup.add(f.attack())
+    })
   }
 }

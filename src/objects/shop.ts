@@ -1,4 +1,4 @@
-import frogDatas from "../datas/frog/base.json"
+import frogDatas from "../datas/frog.json"
 import { Frogs } from "../../types/frog"
 import { SIDE_BAR_WIDTH } from "../constants"
 import { createFontStyle } from "../utils"
