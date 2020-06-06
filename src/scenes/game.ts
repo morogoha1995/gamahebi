@@ -4,13 +4,13 @@ import { Wave } from "../objects/snake/wave"
 import { Shop } from "../objects/shop"
 import { Frog } from "../objects/frog/frog"
 import { FrogName } from "../../types/frog"
-import { BulletGroup } from "../objects/bullet/bulletGroup"
+//import { BulletGroup } from "../objects/bullet/bulletGroup"
 import { Bullet } from "../objects/bullet/bullet"
 
 export class Game extends Phaser.Scene {
   private field!: Field
   private frogGroup!: FrogGroup
-  private bulletGroup!: BulletGroup
+  private bulletGroup!: Phaser.Physics.Arcade.Group
   private wave!: Wave
   private shop!: Shop
   private selectedFrog: Phaser.GameObjects.Image | null = null
@@ -23,7 +23,7 @@ export class Game extends Phaser.Scene {
   create() {
     this.field = new Field(this)
     this.frogGroup = new FrogGroup(this)
-    this.bulletGroup = new BulletGroup(this)
+    this.bulletGroup = this.physics.add.group({ runChildUpdate: true })
     this.wave = new Wave(this)
     this.shop = new Shop(this)
 
@@ -103,7 +103,7 @@ export class Game extends Phaser.Scene {
 
   private hit(snake: any, bullet: any) {
     bullet.destroy()
-    snake.destroy()
+    snake.damaged(1)
   }
 
   private checkFrogAttack() {

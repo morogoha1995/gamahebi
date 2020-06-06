@@ -8,9 +8,7 @@ export class Snake extends Phaser.GameObjects.Image {
   private speed: number
 
   constructor(scene: Phaser.Scene, x: number, name: SnakeName) {
-    super(scene, x, 0, `${name}Snake`)
-
-    scene.add.existing(this)
+    super(scene, x, 50, `${name}Snake`)
 
     const sd = SnakeDatas[name]
     this.hp = sd.hp
@@ -18,9 +16,19 @@ export class Snake extends Phaser.GameObjects.Image {
 
     this
       .setDepth(20)
-      .setSize(TILE_SIZE * sd.col, this.height)
+    //.setSize(TILE_SIZE * sd.col, this.height)
 
-    scene.physics.world.enable(this)
-    this.body.setVelocityY(this.speed)
+    scene.add.existing(this)
+    //scene.physics.world.enable(this)
+  }
+
+  update() {
+    console.log("s")
+    this.y += 3
+  }
+
+  damaged(atk: number) {
+    this.destroy()
+    this.hp -= atk
   }
 }

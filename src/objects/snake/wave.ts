@@ -14,7 +14,6 @@ export class Wave {
   private makeSnake() {
     const snakeName = this.determineSnakeName()
     this.snakeGroup.spawn(snakeName)
-
   }
 
   update() {

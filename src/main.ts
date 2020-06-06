@@ -14,7 +14,11 @@ window.onload = () => {
     parent: 'app',
     zoom: zoom,
     physics: {
-      default: "arcade"
+      default: "arcade",
+      arcade: {
+        debug: false,
+        gravity: { y: 0 }
+      }
     },
     backgroundColor: "#4DB6AC",
     scene: [

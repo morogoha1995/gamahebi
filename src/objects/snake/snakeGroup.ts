@@ -7,7 +7,7 @@ export class SnakeGroup extends Phaser.GameObjects.Group {
   private interval = 2000
 
   constructor(scene: Phaser.Scene) {
-    super(scene)
+    super(scene, { runChildUpdate: true })
   }
 
   spawn(name: SnakeName) {
