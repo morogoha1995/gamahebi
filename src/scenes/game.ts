@@ -1,15 +1,13 @@
 import { Field } from "../objects/field"
-import { FrogGroup } from "../objects/frog/frogGroup"
 import { Wave } from "../objects/snake/wave"
 import { Shop } from "../objects/shop"
 import { Frog } from "../objects/frog/frog"
 import { FrogName } from "../../types/frog"
-//import { BulletGroup } from "../objects/bullet/bulletGroup"
 import { Bullet } from "../objects/bullet/bullet"
 
 export class Game extends Phaser.Scene {
   private field!: Field
-  private frogGroup!: FrogGroup
+  private frogGroup!: Phaser.Physics.Arcade.Group
   private bulletGroup!: Phaser.Physics.Arcade.Group
   private wave!: Wave
   private shop!: Shop
@@ -22,13 +20,14 @@ export class Game extends Phaser.Scene {
 
   create() {
     this.field = new Field(this)
-    this.frogGroup = new FrogGroup(this)
+    this.frogGroup = this.physics.add.group()
     this.bulletGroup = this.physics.add.group({ runChildUpdate: true })
     this.wave = new Wave(this)
     this.shop = new Shop(this)
 
     // Add collision
-    this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hit)
+    this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet)
+    this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake)
 
     this.addEvents()
   }
@@ -101,15 +100,23 @@ export class Game extends Phaser.Scene {
     }
   }
 
-  private hit(snake: any, bullet: any) {
+  private hitBullet(snake: any, bullet: any) {
     bullet.destroy()
     snake.damaged(1)
   }
 
+  private hitSnake(frog: any, snake: any) {
+    frog.destroy()
+  }
+
   private checkFrogAttack() {
     this.frogGroup.children.iterate((f: any) => {
-      if (f.canAttack())
-        this.bulletGroup.add(f.attack())
+      if (f.canAttack()) {
+        console.log(this.physics)
+        const b = new Bullet(this, f.x, f.y, f.name)
+        this.bulletGroup.add(b)
+        f.attack()
+      }
     })
   }
 }

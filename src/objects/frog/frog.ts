@@ -28,7 +28,6 @@ export class Frog extends Phaser.GameObjects.Image {
     this.setDepth(10)
 
     scene.add.existing(this)
-    scene.physics.world.enable(this)
   }
 
   canAttack(): boolean {
@@ -39,9 +38,7 @@ export class Frog extends Phaser.GameObjects.Image {
     this.nextAttack = this.scene.time.now + this.interval
   }
 
-  attack(): Bullet {
-    const b = new Bullet(this.scene, this.x, this.y, this.name)
+  attack() {
     this.calcNextAttack()
-    return b
   }
 }
