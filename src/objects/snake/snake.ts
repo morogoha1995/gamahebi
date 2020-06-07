@@ -7,7 +7,7 @@ export class Snake extends Phaser.Physics.Arcade.Image {
   private speed: number
 
   constructor(scene: Phaser.Scene, x: number, name: SnakeName) {
-    super(scene, x, 500, `${name}Snake`)
+    super(scene, x, 0, `${name}Snake`)
 
     const sd = SnakeDatas[name]
     this.hp = sd.hp

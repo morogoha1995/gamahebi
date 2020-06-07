@@ -31,20 +31,16 @@ export class Wave {
     return Phaser.Math.Between(0, 4)
   }
 
-  private spawn(name: SnakeName) {
+  private spawn() {
     const x = this.determineSpawnX()
+    const name = this.determineSnakeName()
     this.snakeGroup.add(new Snake(this.snakeGroup.scene, x, name))
     this.calcNextSpawn()
   }
 
-  private makeSnake() {
-    const snakeName = this.determineSnakeName()
-    this.spawn(snakeName)
-  }
-
   update() {
     if (this.canSpawn())
-      this.makeSnake()
+      this.spawn()
   }
 
   private determineSnakeName(): SnakeName {
