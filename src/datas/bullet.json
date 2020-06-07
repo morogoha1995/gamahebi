@@ -1,6 +1,6 @@
 {
   "pistol": {
-    "speed": 1
+    "speed": 100
   },
   "rapid": {
     "speed": 300

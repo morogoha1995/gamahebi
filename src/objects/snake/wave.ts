@@ -6,11 +6,11 @@ export class Wave {
   private current = 1
   private spawnCount = 0
   private interval = 2000
-  private nextSpawn = 5000
-  snakeGroup: Phaser.Physics.Arcade.Group
+  private nextSpawn = 0
+  snakeGroup: Phaser.GameObjects.Group
 
   constructor(scene: Phaser.Scene) {
-    this.snakeGroup = scene.physics.add.group({ runChildUpdate: true })
+    this.snakeGroup = scene.add.group()
   }
 
   canSpawn() {
@@ -22,7 +22,8 @@ export class Wave {
   }
 
   private determineSpawnX(): number {
-    return SIDE_BAR_WIDTH + TILE_SIZE * this.determineSpawnCol() + HALF_TILE_SIZE
+    return SIDE_BAR_WIDTH + HALF_TILE_SIZE
+    //TILE_SIZE * this.determineSpawnCol() +
   }
 
   // 蛇をどの列に生成するかを割り出すメソッド
@@ -32,8 +33,7 @@ export class Wave {
 
   private spawn(name: SnakeName) {
     const x = this.determineSpawnX()
-    const snake = new Snake(this.snakeGroup.scene, x, name)
-    this.snakeGroup.add(snake)
+    this.snakeGroup.add(new Snake(this.snakeGroup.scene, x, name))
     this.calcNextSpawn()
   }
 

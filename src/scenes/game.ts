@@ -7,8 +7,8 @@ import { Bullet } from "../objects/bullet/bullet"
 
 export class Game extends Phaser.Scene {
   private field!: Field
-  private frogGroup!: Phaser.Physics.Arcade.Group
-  private bulletGroup!: Phaser.Physics.Arcade.Group
+  private frogGroup!: Phaser.GameObjects.Group
+  private bulletGroup!: Phaser.GameObjects.Group
   private wave!: Wave
   private shop!: Shop
   private selectedFrog: Phaser.GameObjects.Image | null = null
@@ -20,14 +20,14 @@ export class Game extends Phaser.Scene {
 
   create() {
     this.field = new Field(this)
-    this.frogGroup = this.physics.add.group()
-    this.bulletGroup = this.physics.add.group({ runChildUpdate: true })
+    this.frogGroup = this.add.group()
+    this.bulletGroup = this.add.group()
     this.wave = new Wave(this)
     this.shop = new Shop(this)
 
     // Add collision
-    this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet)
-    this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake)
+    //this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet)
+    //this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake)
 
     this.addEvents()
   }
@@ -112,7 +112,6 @@ export class Game extends Phaser.Scene {
   private checkFrogAttack() {
     this.frogGroup.children.iterate((f: any) => {
       if (f.canAttack()) {
-        console.log(this.physics)
         const b = new Bullet(this, f.x, f.y, f.name)
         this.bulletGroup.add(b)
         f.attack()

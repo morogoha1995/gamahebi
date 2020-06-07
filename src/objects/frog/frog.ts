@@ -1,10 +1,8 @@
-import { Bullet } from "../bullet/bullet"
 import { FrogName } from "../../../types/frog"
 import FrogDatas from "../../datas/frog.json"
 
-export class Frog extends Phaser.GameObjects.Image {
+export class Frog extends Phaser.Physics.Arcade.Image {
   name: FrogName
-  body!: Phaser.Physics.Arcade.Body
   private jaName: string
   private hp: number
   private atk: number
@@ -28,6 +26,7 @@ export class Frog extends Phaser.GameObjects.Image {
     this.setDepth(10)
 
     scene.add.existing(this)
+    scene.physics.add.existing(this)
   }
 
   canAttack(): boolean {

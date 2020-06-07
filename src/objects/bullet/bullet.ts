@@ -1,8 +1,7 @@
 import BulletDatas from "../../datas/bullet.json"
 import { FrogName } from "../../../types/frog"
 
-
-export class Bullet extends Phaser.GameObjects.Image {
+export class Bullet extends Phaser.Physics.Arcade.Image {
   private speed: number
 
   constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName) {
@@ -14,9 +13,7 @@ export class Bullet extends Phaser.GameObjects.Image {
     this.speed = bd.speed
 
     scene.add.existing(this)
-  }
-
-  update() {
-    this.y -= this.speed
+    scene.physics.add.existing(this)
+    this.setVelocityY(-this.speed)
   }
 }

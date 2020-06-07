@@ -2,8 +2,7 @@ import SnakeDatas from "../../datas/snake.json"
 import { SnakeName } from "../../../types/snake"
 import { TILE_SIZE } from "../../constants"
 
-export class Snake extends Phaser.GameObjects.Image {
-  body!: Phaser.Physics.Arcade.Body
+export class Snake extends Phaser.Physics.Arcade.Image {
   private hp: number
   private speed: number
 
@@ -19,10 +18,8 @@ export class Snake extends Phaser.GameObjects.Image {
     //.setSize(TILE_SIZE * sd.col, this.height)
 
     scene.add.existing(this)
-  }
-
-  update() {
-    this.y += 3
+    scene.physics.add.existing(this)
+    this.setVelocityY(this.speed)
   }
 
   damaged(atk: number) {
