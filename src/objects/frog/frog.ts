@@ -27,6 +27,8 @@ export class Frog extends Phaser.Physics.Arcade.Image {
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
+
+    console.log(this.x, this.body.x, this.body.center)
   }
 
   canAttack(): boolean {

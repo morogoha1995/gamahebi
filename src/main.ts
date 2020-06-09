@@ -17,7 +17,6 @@ window.onload = () => {
       default: "arcade",
       arcade: {
         debug: true,
-        gravity: { y: 0 }
       }
     },
     backgroundColor: "#4DB6AC",

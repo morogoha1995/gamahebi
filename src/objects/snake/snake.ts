@@ -5,6 +5,7 @@ import { TILE_SIZE } from "../../constants"
 export class Snake extends Phaser.Physics.Arcade.Image {
   private hp: number
   private speed: number
+  private f = false
 
   constructor(scene: Phaser.Scene, x: number, name: SnakeName) {
     super(scene, x, 0, `${name}Snake`)
@@ -19,6 +20,7 @@ export class Snake extends Phaser.Physics.Arcade.Image {
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
+    this.body.position.set(x, 0)
     this.setVelocityY(this.speed)
   }
 

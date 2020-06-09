@@ -26,8 +26,8 @@ export class Game extends Phaser.Scene {
     this.shop = new Shop(this)
 
     // Add collision
-    //this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet)
-    //this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake)
+    this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet)
+    this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake)
 
     this.addEvents()
   }

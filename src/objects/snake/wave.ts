@@ -5,16 +5,17 @@ import { Snake } from "./snake"
 export class Wave {
   private current = 1
   private spawnCount = 0
+  private maxSpawnCount = 20
   private interval = 2000
   private nextSpawn = 0
   snakeGroup: Phaser.GameObjects.Group
 
   constructor(scene: Phaser.Scene) {
-    this.snakeGroup = scene.add.group()
+    this.snakeGroup = scene.add.group({ runChildUpdate: true })
   }
 
   canSpawn() {
-    return this.snakeGroup.scene.time.now >= this.nextSpawn
+    return this.snakeGroup.scene.time.now >= this.nextSpawn && this.spawnCount < this.maxSpawnCount
   }
 
   private calcNextSpawn() {
@@ -36,6 +37,7 @@ export class Wave {
     const name = this.determineSnakeName()
     this.snakeGroup.add(new Snake(this.snakeGroup.scene, x, name))
     this.calcNextSpawn()
+    this.spawnCount++
   }
 
   update() {

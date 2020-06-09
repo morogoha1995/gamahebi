@@ -9,11 +9,11 @@ export class Bullet extends Phaser.Physics.Arcade.Image {
 
     const bd = BulletDatas[name]
 
-    //this.setOrigin(0.25)
     this.speed = bd.speed
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
+    this.body.position.set(x, y)
     this.setVelocityY(-this.speed)
   }
 }
