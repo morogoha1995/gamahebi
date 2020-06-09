@@ -5,7 +5,6 @@ import { TILE_SIZE } from "../../constants"
 export class Snake extends Phaser.Physics.Arcade.Image {
   private hp: number
   private speed: number
-  private f = false
 
   constructor(scene: Phaser.Scene, x: number, name: SnakeName) {
     super(scene, x, 0, `${name}Snake`)
@@ -25,7 +24,15 @@ export class Snake extends Phaser.Physics.Arcade.Image {
   }
 
   damaged(atk: number) {
-    this.destroy()
     this.hp -= atk
+  }
+
+  private isDead(): boolean {
+    return this.hp <= 0
+  }
+
+  checkDeath() {
+    if (this.isDead())
+      this.destroy()
   }
 }

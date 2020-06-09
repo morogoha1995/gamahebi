@@ -6,7 +6,7 @@ export class Wave {
   private current = 1
   private spawnCount = 0
   private maxSpawnCount = 20
-  private interval = 2000
+  private interval = 5000
   private nextSpawn = 0
   snakeGroup: Phaser.GameObjects.Group
 
@@ -23,8 +23,7 @@ export class Wave {
   }
 
   private determineSpawnX(): number {
-    return SIDE_BAR_WIDTH + HALF_TILE_SIZE
-    //TILE_SIZE * this.determineSpawnCol() +
+    return SIDE_BAR_WIDTH + TILE_SIZE * this.determineSpawnCol() + HALF_TILE_SIZE
   }
 
   // 蛇をどの列に生成するかを割り出すメソッド
@@ -43,6 +42,12 @@ export class Wave {
   update() {
     if (this.canSpawn())
       this.spawn()
+
+    this.checkDeath()
+  }
+
+  private checkDeath() {
+    this.snakeGroup.children.each((e: any) => e.checkDeath())
   }
 
   private determineSnakeName(): SnakeName {

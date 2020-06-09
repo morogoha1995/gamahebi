@@ -33,9 +33,8 @@ export class Game extends Phaser.Scene {
   }
 
   update() {
-    this.wave.update()
-
     this.checkFrogAttack()
+    this.wave.update()
   }
 
   private addEvents() {
