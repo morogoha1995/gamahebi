@@ -8,12 +8,12 @@ export class Frog extends Phaser.Physics.Arcade.Image {
   private atk: number
   private price: number
   private interval: number
-  private basePos: any
+  private col: number
 
   private grade = 1
   private nextAttack = 0
 
-  constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName) {
+  constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName, col: number) {
     super(scene, x, y, name)
 
     const fd = FrogDatas[name]
@@ -23,16 +23,15 @@ export class Frog extends Phaser.Physics.Arcade.Image {
     this.price = fd.price
     this.interval = fd.interval
     this.name = name
+    this.col = col
     this.setDepth(10)
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
-
-    console.log(this.x, this.body.x, this.body.center)
   }
 
-  canAttack(): boolean {
-    return this.nextAttack <= this.scene.time.now
+  canAttack(snakeCol: number): boolean {
+    return snakeCol === this.col && this.nextAttack <= this.scene.time.now
   }
 
   private calcNextAttack() {

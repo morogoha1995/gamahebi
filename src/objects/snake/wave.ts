@@ -22,19 +22,10 @@ export class Wave {
     this.nextSpawn = this.snakeGroup.scene.time.now + this.interval
   }
 
-  private determineSpawnX(): number {
-    return SIDE_BAR_WIDTH + TILE_SIZE * this.determineSpawnCol() + HALF_TILE_SIZE
-  }
-
-  // 蛇をどの列に生成するかを割り出すメソッド
-  private determineSpawnCol(): number {
-    return Phaser.Math.Between(0, 4)
-  }
-
   private spawn() {
-    const x = this.determineSpawnX()
+    const xCol = Phaser.Math.Between(0, 4)
     const name = this.determineSnakeName()
-    this.snakeGroup.add(new Snake(this.snakeGroup.scene, x, name))
+    this.snakeGroup.add(new Snake(this.snakeGroup.scene, xCol, name))
     this.calcNextSpawn()
     this.spawnCount++
   }

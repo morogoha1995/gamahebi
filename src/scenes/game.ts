@@ -94,7 +94,7 @@ export class Game extends Phaser.Scene {
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
     if (tile && this.field.canPutFrog(tile.y, tile.x)) {
-      this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name))
+      this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tile.x))
       this.field.putFrog(tile.y, tile.x)
     }
   }
@@ -109,12 +109,14 @@ export class Game extends Phaser.Scene {
   }
 
   private checkFrogAttack() {
-    this.frogGroup.children.iterate((f: any) => {
-      if (f.canAttack()) {
-        const b = new Bullet(this, f.x, f.y, f.name)
-        this.bulletGroup.add(b)
-        f.attack()
-      }
-    })
+    this.wave.snakeGroup.children.iterate((s: any) =>
+      this.frogGroup.children.iterate((f: any) => {
+        if (f.canAttack(s.col)) {
+          const b = new Bullet(this, f.x, f.y, f.name)
+          this.bulletGroup.add(b)
+          f.attack()
+        }
+      })
+    )
   }
 }
