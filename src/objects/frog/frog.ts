@@ -14,7 +14,7 @@ export class Frog extends Phaser.Physics.Arcade.Image {
   private nextAttack = 0
 
   constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName, col: number) {
-    super(scene, x, y, name)
+    super(scene, x, y - 30, name)
 
     const fd = FrogDatas[name]
     this.jaName = fd.jaName
@@ -28,6 +28,13 @@ export class Frog extends Phaser.Physics.Arcade.Image {
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
+
+    scene.add.tween({
+      targets: this,
+      duration: 300,
+      y: y,
+      ease: "bounce",
+    })
   }
 
   canAttack(snakeCol: number): boolean {

@@ -100,8 +100,10 @@ export class Game extends Phaser.Scene {
   }
 
   private hitBullet(snake: any, bullet: any) {
-    bullet.destroy()
-    snake.damaged(1)
+    if (!bullet.getIsDying()) {
+      bullet.die()
+      snake.damaged(1)
+    }
   }
 
   private hitSnake(frog: any, snake: any) {

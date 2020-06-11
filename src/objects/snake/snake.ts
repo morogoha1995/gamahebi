@@ -15,11 +15,10 @@ export class Snake extends Phaser.Physics.Arcade.Image {
     this.speed = sd.speed
     this.col = col
 
+    const x = this.determineXFromCol()
     this
       .setDepth(20)
-    //.setSize(TILE_SIZE * sd.col, this.height)
-    const x = this.determineXFromCol()
-    this.setPosition(x, 0)
+      .setPosition(x, 0)
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
@@ -28,8 +27,10 @@ export class Snake extends Phaser.Physics.Arcade.Image {
   }
 
   damaged(atk: number) {
+    console.log(this.hp)
     this.hp -= atk
   }
+
 
   private isDead(): boolean {
     return this.hp <= 0
@@ -40,8 +41,22 @@ export class Snake extends Phaser.Physics.Arcade.Image {
     return SIDE_BAR_WIDTH + x + HALF_TILE_SIZE
   }
 
+  private die() {
+    this.setActive(false)
+
+    this.scene.add.tween({
+      targets: this,
+      duration: 450,
+      alpha: 0,
+      scaleX: 1.5,
+      scaleY: 0.2,
+      y: this.y + 20,
+      onComplete: () => this.destroy()
+    })
+  }
+
   checkDeath() {
     if (this.isDead())
-      this.destroy()
+      this.die()
   }
 }

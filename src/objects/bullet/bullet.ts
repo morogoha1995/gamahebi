@@ -3,6 +3,7 @@ import { FrogName } from "../../../types/frog"
 
 export class Bullet extends Phaser.Physics.Arcade.Image {
   private speed: number
+  private isDying = false
 
   constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName) {
     super(scene, x, y, `${name}Bullet`)
@@ -15,5 +16,29 @@ export class Bullet extends Phaser.Physics.Arcade.Image {
     scene.physics.add.existing(this)
     this.body.position.set(x, y)
     this.setVelocityY(-this.speed)
+  }
+
+  die() {
+    this.dieAnims()
+  }
+
+  getIsDying(): boolean {
+    return this.isDying
+  }
+
+  private dieAnims() {
+    if (this.isDying)
+      return
+
+    this.isDying = true
+    this.setVelocityY(0)
+
+    this.scene.add.tween({
+      targets: this,
+      duration: 100,
+      scale: 2,
+      alpha: 0,
+      onComplete: () => this.destroy()
+    })
   }
 }
