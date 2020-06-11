@@ -13,10 +13,10 @@ export class Shop {
       height = 100,
       halfHeight = height / 2,
       imgSize = 70,
-      padding = 10,
+      padding = 6,
+      fontSize = 36,
       textX = imgSize + padding,
-      nameTextY = halfHeight - 10,
-      priceTextY = halfHeight + 10
+      priceTextY = halfHeight
 
     let y = 0
 
@@ -25,15 +25,16 @@ export class Shop {
 
         img = scene.add.image(padding, halfHeight, key).setDisplaySize(imgSize, imgSize).setOrigin(0, 0.5),
 
-        text = scene.add.text(textX, nameTextY, fd.jaName, createFontStyle("#333333", 20)).setOrigin(0, 0.5),
+        priceText = scene.add.text(textX, priceTextY, `${fd.price}G`, createFontStyle("orange", fontSize)).setOrigin(0, 0.5),
 
-        priceText = scene.add.text(textX, priceTextY, `${fd.price}G`, createFontStyle("#333333", 20)).setOrigin(0, 0.5),
+        zone = scene.add.zone(0, 0, SIDE_BAR_WIDTH, height).setOrigin(0, 0).setInteractive(),
 
-        container = scene.add.container(0, y, [img, text, priceText])
-          .setSize(SIDE_BAR_WIDTH, height)
-          .setInteractive()
+        container = scene.add.container(0, y, [img, priceText, zone])
 
-      this.frogs[key] = container
+      this.frogs[key] = {
+        container: container,
+        zone: zone
+      }
       y += height + padding
     }
   }

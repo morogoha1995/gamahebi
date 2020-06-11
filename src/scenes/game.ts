@@ -40,7 +40,7 @@ export class Game extends Phaser.Scene {
   private addEvents() {
     const frogs = this.shop.getFrogs()
     for (const key in frogs)
-      frogs[key].on("pointerdown", (e: any) => this.selectFrog(key, e.x, e.y))
+      frogs[key].zone.on("pointerdown", (e: any) => this.selectFrog(key, e.x, e.y))
 
     this.input
       .on("pointermove", (e: any) => this.moveSelectedFrog(e.x, e.y))
