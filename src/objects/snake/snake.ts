@@ -5,7 +5,7 @@ import { Organism } from "../organism"
 
 export class Snake extends Organism {
   private speed: number
-  private _isAtk = false
+  private _isAttack = false
   private isSlow = false
 
   constructor(scene: Phaser.Scene, col: number, name: SnakeName) {
@@ -20,8 +20,8 @@ export class Snake extends Organism {
     this.setVelocityY(this.speed)
   }
 
-  get isAtk() {
-    return this._isAtk
+  get isAttack() {
+    return this._isAttack
   }
 
   update() {
@@ -31,7 +31,7 @@ export class Snake extends Organism {
   private changeVy() {
     let newVy = this.speed
 
-    if (this.isAtk)
+    if (this.isAttack)
       newVy = 0
     else if (this.isSlow)
       newVy = this.speed / 2
@@ -39,16 +39,16 @@ export class Snake extends Organism {
     this.setVelocityY(newVy)
   }
 
-  atk() {
-    if (this.isAtk)
+  attack() {
+    if (this.isAttack)
       return
 
-    this._isAtk = true
-    this.atkTween()
+    this._isAttack = true
+    this.attackTween()
   }
 
-  private atkTween() {
-    this.scene.time.delayedCall(1000, () => this._isAtk = false)
+  private attackTween() {
+    this.scene.time.delayedCall(1000, () => this._isAttack = false)
 
     this.scene.add.tween({
       targets: this,

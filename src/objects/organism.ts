@@ -18,7 +18,10 @@ export class Organism extends Phaser.Physics.Arcade.Image {
   damaged(atk: number) {
     this.hp -= atk
 
-    this.damagedTween()
+    if (this.isDead())
+      this.die()
+    else
+      this.damagedTween()
   }
 
   private damagedTween() {
@@ -39,12 +42,6 @@ export class Organism extends Phaser.Physics.Arcade.Image {
 
   private isDead(): boolean {
     return this.hp <= 0
-  }
-
-
-  checkDeath() {
-    if (this.isDead())
-      this.die()
   }
 
   private die() {

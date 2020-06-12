@@ -5,8 +5,8 @@ import { Snake } from "./snake"
 export class Wave {
   private current = 1
   private spawnCount = 0
-  private maxSpawnCount = 20
-  private interval = 5000
+  private maxSpawnCount = 5
+  private interval = 1000
   private nextSpawn = 0
   snakeGroup: Phaser.GameObjects.Group
 
@@ -33,12 +33,6 @@ export class Wave {
   update() {
     if (this.canSpawn())
       this.spawn()
-
-    this.checkDeath()
-  }
-
-  private checkDeath() {
-    this.snakeGroup.children.each((e: any) => e.checkDeath())
   }
 
   private determineSnakeName(): SnakeName {

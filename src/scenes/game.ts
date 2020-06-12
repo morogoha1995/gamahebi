@@ -100,7 +100,7 @@ export class Game extends Phaser.Scene {
   }
 
   private hitBullet(snake: any, bullet: any) {
-    if (bullet.getIsDying())
+    if (bullet.isDying)
       return
 
     bullet.die()
@@ -108,10 +108,10 @@ export class Game extends Phaser.Scene {
   }
 
   private hitSnake(frog: any, snake: any) {
-    if (snake.isAtk)
+    if (snake.isAttack)
       return
 
-    snake.atk()
+    snake.attack()
     frog.damaged(1)
   }
 
