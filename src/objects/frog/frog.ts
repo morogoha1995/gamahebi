@@ -22,13 +22,16 @@ export class Frog extends Organism {
     this.price = fd.price
     this.interval = fd.interval
     this.name = name
-    this.setDepth(10)
+    this
+      .setDepth(10)
+      .setActive(false)
 
     scene.add.tween({
       targets: this,
       duration: 300,
       y: y,
       ease: "bounce",
+      onComplete: () => this.setActive(true)
     })
   }
 
