@@ -1,31 +1,35 @@
 import { SnakeName } from "../../../types/snake"
-import { SIDE_BAR_WIDTH, TILE_SIZE, HALF_TILE_SIZE } from "../../constants"
+import { SIDE_BAR_WIDTH, TILE_SIZE, HALF_TILE_SIZE, HALF_WIDTH, HALF_HEIGHT } from "../../constants"
 import { Snake } from "./snake"
+import { createFontStyle } from "../../utils"
 
 export class Wave {
+  private scene: Phaser.Scene
   private current = 1
   private spawnCount = 0
-  private maxSpawnCount = 5
+  private maxSpawnCount = 1
   private interval = 1000
   private nextSpawn = 0
+  private isInNextDelay = false
   snakeGroup: Phaser.GameObjects.Group
 
   constructor(scene: Phaser.Scene) {
+    this.scene = scene
     this.snakeGroup = scene.add.group({ runChildUpdate: true })
   }
 
   canSpawn() {
-    return this.snakeGroup.scene.time.now >= this.nextSpawn && this.spawnCount < this.maxSpawnCount
+    return this.scene.time.now >= this.nextSpawn && this.spawnCount < this.maxSpawnCount
   }
 
   private calcNextSpawn() {
-    this.nextSpawn = this.snakeGroup.scene.time.now + this.interval
+    this.nextSpawn = this.scene.time.now + this.interval
   }
 
   private spawn() {
     const xCol = Phaser.Math.Between(0, 4)
     const name = this.determineSnakeName()
-    this.snakeGroup.add(new Snake(this.snakeGroup.scene, xCol, name))
+    this.snakeGroup.add(new Snake(this.scene, xCol, name))
     this.calcNextSpawn()
     this.spawnCount++
   }
@@ -33,6 +37,59 @@ export class Wave {
   update() {
     if (this.canSpawn())
       this.spawn()
+
+    if (this.isGoNext())
+      this.goNext()
+  }
+
+  private goNext() {
+    this.isInNextDelay = true
+    this.current++
+
+    this.waveTextTween()
+  }
+
+  private init() {
+    this.isInNextDelay = false
+    this.spawnCount = 0
+  }
+
+  private waveTextTween() {
+    const t = this.scene.add.text(HALF_WIDTH, 0, `第${this.current}波`, createFontStyle("blue", 48))
+    t
+      .setOrigin(0.5)
+      .setAlpha(0)
+      .setDepth(50)
+      .setAngle(-45)
+
+    this.scene.add.tween({
+      targets: t,
+      duration: 1000,
+      alpha: 1,
+      angle: 0,
+      y: 200,
+      ease: "bounce",
+      onComplete: () => this.scene.add.tween({
+        targets: t,
+        delay: 1000,
+        duration: 500,
+        alpha: 0,
+        y: 0,
+        onComplete: () => {
+          t.destroy()
+          this.init()
+          this.upDifficulty()
+        }
+      })
+    })
+  }
+
+  private upDifficulty() {
+    this.maxSpawnCount += Math.max(1, Math.floor(this.current / 3))
+  }
+
+  private isGoNext(): boolean {
+    return !this.isInNextDelay && this.spawnCount === this.maxSpawnCount && this.snakeGroup.getLength() === 0
   }
 
   private determineSnakeName(): SnakeName {

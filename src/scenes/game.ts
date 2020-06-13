@@ -108,7 +108,7 @@ export class Game extends Phaser.Scene {
   }
 
   private hitSnake(frog: any, snake: any) {
-    if (snake.isAttack)
+    if (snake.isAttack || frog.col !== snake.col)
       return
 
     snake.attack()
