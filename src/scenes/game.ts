@@ -26,7 +26,7 @@ export class Game extends Phaser.Scene {
     this.shop = new Shop(this)
 
     // Add collision
-    this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet)
+    this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet, undefined, this)
     this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake)
 
     this.addEvents()
@@ -100,11 +100,13 @@ export class Game extends Phaser.Scene {
   }
 
   private hitBullet(snake: any, bullet: any) {
-    if (bullet.isDying)
+    if (bullet.isDying || snake.isDead())
       return
 
     bullet.die()
     snake.damaged(1)
+    if (snake.isDead())
+      this.shop.addGold(snake.getGold())
   }
 
   private hitSnake(frog: any, snake: any) {

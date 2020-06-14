@@ -2,6 +2,7 @@
   "normal": {
     "hp": 5,
     "speed": 25,
-    "col": 1
+    "col": 1,
+    "earn": 5
   }
 }

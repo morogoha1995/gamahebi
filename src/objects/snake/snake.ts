@@ -2,9 +2,11 @@ import SnakeDatas from "../../datas/snake.json"
 import { SnakeName } from "../../../types/snake"
 import { TILE_SIZE, SIDE_BAR_WIDTH, HALF_TILE_SIZE } from "../../constants"
 import { Organism } from "../organism"
+import { createFontStyle } from "../../utils"
 
 export class Snake extends Organism {
   private speed: number
+  private earn: number
   private _isAttack = false
   private isSlow = false
 
@@ -14,6 +16,7 @@ export class Snake extends Organism {
     const sd = SnakeDatas[name]
     this.hp = sd.hp
     this.speed = sd.speed
+    this.earn = sd.earn
 
     this.setDepth(20)
     this.body.position.set(this.x, 0)
@@ -45,17 +48,42 @@ export class Snake extends Organism {
 
     this._isAttack = true
     this.attackTween()
+    this.scene.time.delayedCall(1000, () => this._isAttack = false)
   }
 
   private attackTween() {
-    this.scene.time.delayedCall(1000, () => this._isAttack = false)
-
     this.scene.add.tween({
       targets: this,
       duration: 200,
       y: this.y + 20,
       scale: 1.2,
       yoyo: true
+    })
+  }
+
+  getGold(): number {
+    this.earnTween()
+    return this.earn
+  }
+
+  private earnTween() {
+    const x = this.x,
+      y = this.y,
+      text = this.scene.add.text(this.x, this.y, `+${this.earn}G`, createFontStyle("orange", 20))
+
+    this.scene.add.tween({
+      targets: text,
+      duration: 250,
+      x: x + 15,
+      y: y - 30,
+      onComplete: () => this.scene.add.tween({
+        targets: text,
+        duration: 250,
+        x: x + 30,
+        y: y,
+        ease: "bounce",
+        onComplete: () => text.destroy()
+      })
     })
   }
 }

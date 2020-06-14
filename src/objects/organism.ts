@@ -40,7 +40,7 @@ export class Organism extends Phaser.Physics.Arcade.Image {
     })
   }
 
-  private isDead(): boolean {
+  isDead(): boolean {
     return this.hp <= 0
   }
 

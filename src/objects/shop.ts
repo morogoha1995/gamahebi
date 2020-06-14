@@ -42,8 +42,13 @@ export class Shop {
 
   }
 
-  setGoldText(value: number) {
-    this.goldText.setText(`${value}G`)
+  addGold(value: number) {
+    this.gold += value
+    this.setGoldText()
+  }
+
+  private setGoldText() {
+    this.goldText.setText(`${this.gold}G`)
   }
 
   getFrogs(): Frogs {
