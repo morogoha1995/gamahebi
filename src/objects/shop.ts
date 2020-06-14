@@ -1,5 +1,5 @@
 import frogDatas from "../datas/frog.json"
-import { Frogs } from "../../types/frog"
+import { Frogs, FrogName } from "../../types/frog"
 import { SIDE_BAR_WIDTH } from "../constants"
 import { createFontStyle } from "../utils"
 
@@ -22,7 +22,7 @@ export class Shop {
 
     // 所持金の表示
     scene.add.text(padding, textY, "所持金:", createFontStyle("black", 20)).setOrigin(0, 0.5)
-    this.goldText = scene.add.text(90, textY, "0G", createFontStyle("orange", fontSize)).setOrigin(0, 0.5)
+    this.goldText = scene.add.text(90, textY, `${this.gold}G`, createFontStyle("orange", fontSize)).setOrigin(0, 0.5)
     y += height + padding
 
     // 武器一覧の表示
@@ -42,6 +42,20 @@ export class Shop {
 
   }
 
+  canBuy(name: FrogName): boolean {
+    return this.gold >= this.getPrice(name)
+  }
+
+  buy(name: FrogName) {
+    this.gold -= this.getPrice(name)
+    this.setGoldText()
+  }
+
+  private getPrice(name: FrogName): number {
+    const fds = frogDatas
+    return fds[name].price
+  }
+
   addGold(value: number) {
     this.gold += value
     this.setGoldText()
@@ -53,5 +67,13 @@ export class Shop {
 
   getFrogs(): Frogs {
     return this.frogs
+  }
+
+  notEnough(scene: Phaser.Scene) {
+    const text =
+
+      scene.add.tween({
+
+      })
   }
 }

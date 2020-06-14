@@ -39,19 +39,24 @@ export class Game extends Phaser.Scene {
 
   private addEvents() {
     const frogs = this.shop.getFrogs()
-    for (const key in frogs)
-      frogs[key].zone.on("pointerdown", (e: any) => this.selectFrog(key, e.x, e.y))
+    for (const key in frogs) {
+      const name = <FrogName>key
+      frogs[key].zone.on("pointerdown", (e: any) => this.selectFrog(name, e.x, e.y))
+    }
 
     this.input
       .on("pointermove", (e: any) => this.moveSelectedFrog(e.x, e.y))
       .on("pointerup", (e: any) => this.putSelectedFrog(e.x, e.y))
   }
 
-  private selectFrog(key: string, x: number, y: number) {
-    this.selectedFrog = this.add.image(x, y, key)
-      .setName(key)
+  private selectFrog(name: FrogName, x: number, y: number) {
+    if (!this.shop.canBuy(name))
+      return
+
+    this.selectedFrog = this.add.image(x, y, name)
+      .setName(name)
       .setDepth(30)
-    this.frogSample = this.add.image(0, 0, key)
+    this.frogSample = this.add.image(0, 0, name)
       .setAlpha(0.6)
       .setVisible(false)
   }
@@ -93,10 +98,12 @@ export class Game extends Phaser.Scene {
 
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
-    if (tile && this.field.canPutFrog(tile.y, tile.x)) {
-      this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tile.x))
-      this.field.putFrog(tile.y, tile.x)
-    }
+    if (!tile || !this.field.canPutFrog(tile.y, tile.x))
+      return
+
+    this.shop.buy(name)
+    this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tile.x))
+    this.field.putFrog(tile.y, tile.x)
   }
 
   private hitBullet(snake: any, bullet: any) {
