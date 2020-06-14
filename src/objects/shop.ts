@@ -69,11 +69,12 @@ export class Shop {
     return this.frogs
   }
 
+  // TODO
   notEnough(scene: Phaser.Scene) {
-    const text =
+    const text = scene.add.text
 
-      scene.add.tween({
+    scene.add.tween({
 
-      })
+    })
   }
 }

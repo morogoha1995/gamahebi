@@ -25,6 +25,7 @@ export class Frog extends Organism {
     this
       .setDepth(10)
       .setActive(false)
+      .setInteractive()
 
     scene.add.tween({
       targets: this,
@@ -41,6 +42,30 @@ export class Frog extends Organism {
 
   private calcNextAttack() {
     this.nextAttack = this.scene.time.now + this.interval
+  }
+
+  upgrade() {
+    this.price = this.calcUpgradePrice()
+  }
+
+  getUpgradePrice(): number {
+    return this.calcUpgradePrice()
+  }
+
+  private calcUpgradePrice(): number {
+    return this.price * this.grade
+  }
+
+  sell() {
+    this.destroy()
+  }
+
+  getSellPrice(): number {
+    return this.calcSellPrice()
+  }
+
+  private calcSellPrice(): number {
+    return Math.floor(this.price / 2)
   }
 
   attack() {
