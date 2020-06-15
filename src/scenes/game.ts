@@ -30,7 +30,7 @@ export class Game extends Phaser.Scene {
 
     // Add collision
     this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet, undefined, this)
-    this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake)
+    this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake, undefined, this)
 
     this.addEvents()
   }
@@ -111,7 +111,7 @@ export class Game extends Phaser.Scene {
       return
 
     this.shop.buy(name)
-    const frog = new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tX)
+    const frog = new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tY, tX)
     frog.on("pointerdown", () => {
       if (this.infoWindow.isOpen)
         return
@@ -146,7 +146,7 @@ export class Game extends Phaser.Scene {
             return
 
           this.shop.addGold(sellPrice)
-          //this.field.destroyFrog(tY, tX)
+          this.field.destroyFrog(frog.row, frog.col)
           frog.destroy()
           this.infoWindow.tween("sell")
         })
@@ -171,6 +171,8 @@ export class Game extends Phaser.Scene {
 
     snake.attack()
     frog.damaged(1)
+    if (frog.isDead())
+      this.field.destroyFrog(frog.row, frog.col)
   }
 
   private checkFrogAttack() {

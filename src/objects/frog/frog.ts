@@ -5,15 +5,16 @@ import { createFontStyle } from "../../utils"
 
 export class Frog extends Organism {
   name: FrogName
-  private jaName: string
+  readonly jaName: string
   private atk: number
   private price: number
   private interval: number
+  readonly row: number
 
   private grade = 1
   private nextAttack = 0
 
-  constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName, col: number) {
+  constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName, row: number, col: number) {
     super(scene, x, y - 30, name, col)
 
     const fd = FrogDatas[name]
@@ -23,6 +24,7 @@ export class Frog extends Organism {
     this.price = fd.price
     this.interval = fd.interval
     this.name = name
+    this.row = row
     this
       .setDepth(10)
       .setActive(false)

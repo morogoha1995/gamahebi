@@ -33,4 +33,8 @@ export class Field {
   putFrog(row: number, col: number) {
     this.indexes[row][col] = 1
   }
+
+  destroyFrog(row: number, col: number) {
+    this.indexes[row][col] = 0
+  }
 }
