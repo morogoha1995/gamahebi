@@ -7,6 +7,7 @@ export class Boot extends Phaser.Scene {
 
   preload() {
     this.load
+      .image("x", "assets/imgs/x.png")
       .image("pistol", "assets/imgs/frog/pistol.png")
       .image("rapid", "assets/imgs/frog/rapid.png")
       .image("pistolBullet", "assets/imgs/frog/bullet/pistol.png")

@@ -3,8 +3,8 @@ import { createFontStyle } from "../../utils"
 import { TweenName } from "../../../types/infoWindow"
 
 export class InfoWindow extends Phaser.GameObjects.Container {
-  private isOpen = false
-  private isDuringAnims = false
+  private _isOpen = false
+  private _inAnims = false
   private baseX = 0
   private baseY = 0
   private title: Phaser.GameObjects.Text
@@ -19,12 +19,12 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     this.sellText = scene.add.text(0, 0, "")
 
     this
-      .setDepth(20)
+      .setDepth(51)
       .setScale(0)
       .add([
-        scene.add.rectangle(0, 0, 280, 200, 0x606060, 0.6)
+        scene.add.rectangle(0, 0, 500, 340, 0xF0F0F0, 0.6)
           .setOrigin(0.5),
-        scene.add.image(110, -70, "x")
+        scene.add.image(220, -140, "x")
           .setInteractive()
           .on("pointerdown", () => this.tween("close"))
       ])
@@ -33,11 +33,11 @@ export class InfoWindow extends Phaser.GameObjects.Container {
   }
 
   get inAnims(): boolean {
-    return this.isDuringAnims
+    return this._inAnims
   }
 
-  get inOpen(): boolean {
-    return this.isOpen
+  get isOpen(): boolean {
+    return this._isOpen
   }
 
   get upgradeBtn(): Phaser.GameObjects.Text {
@@ -49,7 +49,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
   }
 
   private openTween() {
-    this.isOpen = true
+    this._isOpen = true
     this
       .setVisible(true)
       .setActive(true)
@@ -60,38 +60,38 @@ export class InfoWindow extends Phaser.GameObjects.Container {
       scale: 1,
       x: HALF_WIDTH,
       y: HALF_HEIGHT,
-      onComplete: () => this.isDuringAnims = false
+      ease: "back",
+      onComplete: () => this._inAnims = false
     })
   }
 
-  private handTween(x: number, y: number) {
-    const hand = this.scene.add.image(x, y, "hand")
-    this.add(hand)
+  private btnTween(btnName: string) {
+    const btn = btnName === "upgrade" ? this.upgradeText : this.sellText
 
     this.scene.add.tween({
-      targets: hand,
+      targets: btn,
       duration: 160,
-      angle: 90,
+      y: btn.y + 10,
+      scale: 0.9,
       yoyo: true,
       onComplete: () => {
-        this.remove(hand, true)
         this.closeTween()
       }
     })
   }
 
   private upgradeTween() {
-    this.scene.sound.play("upgrade")
-    this.handTween(-100, 10)
+    // this.scene.sound.play("upgrade")
+    this.btnTween("upgrade")
   }
 
   private sellTween() {
-    this.scene.sound.play("sell")
-    this.handTween(20, 10)
+    // this.scene.sound.play("sell")
+    this.btnTween("sell")
   }
 
   private textTween(text: string) {
-    this.scene.sound.play("notEnough")
+    // this.scene.sound.play("notEnough")
 
     const t = this.scene.add.text(0, 0, text, createFontStyle("#202020"))
       .setOrigin(0.5)
@@ -116,19 +116,19 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     this.baseY = y
     this.setPosition(x, y)
 
-    const btnY = 40,
-      btnFontSize = 16
+    const btnY = 80,
+      btnFontSize = 32
 
-    this.title = this.scene.add.text(0, -40, name, createFontStyle("teal"))
+    this.title = this.scene.add.text(0, -80, name, createFontStyle("teal", 48))
       .setOrigin(0.5)
 
-    this.upgradeText = this.scene.add.text(-60, btnY, `強化: ${price}G`, createFontStyle("red", btnFontSize))
+    this.upgradeText = this.scene.add.text(-120, btnY, `強化: ${price}G`, createFontStyle("red", btnFontSize))
       .setInteractive()
       .setBackgroundColor("blue")
       .setPadding(6, 6, 6, 6)
       .setOrigin(0.5)
 
-    this.sellText = this.scene.add.text(60, btnY, `売却: ${sellPrice}G`, createFontStyle("blue", btnFontSize))
+    this.sellText = this.scene.add.text(120, btnY, `売却: ${sellPrice}G`, createFontStyle("blue", btnFontSize))
       .setInteractive()
       .setPadding(6, 6, 6, 6)
       .setBackgroundColor("green")
@@ -142,10 +142,10 @@ export class InfoWindow extends Phaser.GameObjects.Container {
   }
 
   tween(name: TweenName) {
-    if (this.isDuringAnims)
+    if (this._inAnims)
       return
 
-    this.isDuringAnims = true
+    this._inAnims = true
 
     if (name === "open")
       this.openTween()
@@ -167,13 +167,14 @@ export class InfoWindow extends Phaser.GameObjects.Container {
       scale: 0,
       x: this.baseX,
       y: this.baseY,
+      ease: "Back.easeIn",
       onComplete: () => this.close()
     })
   }
 
   private close() {
-    this.isOpen = false
-    this.isDuringAnims = false
+    this._isOpen = false
+    this._inAnims = false
     this.remove([
       this.title,
       this.upgradeText,

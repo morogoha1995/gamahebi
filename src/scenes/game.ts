@@ -4,6 +4,7 @@ import { Shop } from "../objects/shop"
 import { Frog } from "../objects/frog/frog"
 import { FrogName } from "../../types/frog"
 import { Bullet } from "../objects/bullet/bullet"
+import { InfoWindow } from "../objects/frog/infoWindow"
 
 export class Game extends Phaser.Scene {
   private field!: Field
@@ -11,6 +12,7 @@ export class Game extends Phaser.Scene {
   private bulletGroup!: Phaser.GameObjects.Group
   private wave!: Wave
   private shop!: Shop
+  private infoWindow!: InfoWindow
   private selectedFrog: Phaser.GameObjects.Image | null = null
   private frogSample: Phaser.GameObjects.Image | null = null
 
@@ -24,6 +26,7 @@ export class Game extends Phaser.Scene {
     this.bulletGroup = this.add.group()
     this.wave = new Wave(this)
     this.shop = new Shop(this)
+    this.infoWindow = new InfoWindow(this)
 
     // Add collision
     this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet, undefined, this)
@@ -50,7 +53,7 @@ export class Game extends Phaser.Scene {
   }
 
   private selectFrog(name: FrogName, x: number, y: number) {
-    if (!this.shop.canBuy(name))
+    if (!this.shop.canBuyFrog(name))
       return
 
     this.selectedFrog = this.add.image(x, y, name)
@@ -98,12 +101,58 @@ export class Game extends Phaser.Scene {
 
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
-    if (!tile || !this.field.canPutFrog(tile.y, tile.x))
+    if (!tile)
+      return
+
+    const tX = tile.x,
+      tY = tile.y
+
+    if (!this.field.canPutFrog(tY, tX))
       return
 
     this.shop.buy(name)
-    this.frogGroup.add(new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tile.x))
-    this.field.putFrog(tile.y, tile.x)
+    const frog = new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tX)
+    frog.on("pointerdown", () => {
+      if (this.infoWindow.isOpen)
+        return
+
+      const upgradePrice = frog.getUpgradePrice(),
+        sellPrice = frog.getSellPrice()
+
+      this.infoWindow.setInfo(
+        frog.x,
+        frog.y,
+        frog.getInfoName(),
+        upgradePrice,
+        frog.getSellPrice()
+      )
+      this.infoWindow.tween("open")
+
+      this.infoWindow.upgradeBtn
+        .on("pointerdown", () => {
+          if (this.infoWindow.inAnims)
+            return
+
+          if (this.shop.canBuy(frog.getUpgradePrice())) {
+            this.infoWindow.tween("upgrade")
+            this.shop.upgrade(upgradePrice)
+            frog.upgrade()
+          }
+        })
+
+      this.infoWindow.sellBtn
+        .on("pointerdown", () => {
+          if (this.infoWindow.inAnims)
+            return
+
+          this.shop.addGold(sellPrice)
+          //this.field.destroyFrog(tY, tX)
+          frog.destroy()
+          this.infoWindow.tween("sell")
+        })
+    })
+    this.frogGroup.add(frog)
+    this.field.putFrog(tY, tX)
   }
 
   private hitBullet(snake: any, bullet: any) {

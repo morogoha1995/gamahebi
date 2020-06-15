@@ -42,7 +42,16 @@ export class Shop {
 
   }
 
-  canBuy(name: FrogName): boolean {
+  canBuy(value: number): boolean {
+    return this.gold >= value
+  }
+
+  upgrade(value: number) {
+    this.gold -= value
+    this.setGoldText()
+  }
+
+  canBuyFrog(name: FrogName): boolean {
     return this.gold >= this.getPrice(name)
   }
 

@@ -36,7 +36,6 @@ export class Frog extends Organism {
       onComplete: () => this.setActive(true)
     })
 
-
     this.changeGoldTween(`-${this.price}G`, "crimson")
   }
 
@@ -48,7 +47,13 @@ export class Frog extends Organism {
     this.nextAttack = this.scene.time.now + this.interval
   }
 
+  getInfoName(): string {
+    return this.grade === 1 ? this.jaName : `${this.jaName} +${this.grade}`
+  }
+
   upgrade() {
+    this.changeGoldTween(`-${this.price}G`, "crimson")
+    this.grade++
     this.price = this.calcUpgradePrice()
   }
 
