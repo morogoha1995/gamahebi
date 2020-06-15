@@ -67,33 +67,6 @@ export class Snake extends Organism {
   }
 
   private earnTween() {
-    const x = this.x,
-      y = this.y,
-      text = this.scene.add.text(this.x, this.y, `+${this.earn}G`, createFontStyle("orange", 42)),
-      scene = this.scene
-
-    text
-      .setDepth(49)
-      .setScale(0.5)
-      .setOrigin(0.5)
-      .setRotation(1)
-
-    scene.add.tween({
-      targets: text,
-      duration: 500,
-      y: y - 20,
-      scale: 1,
-      rotation: 0,
-      ease: "cubic",
-      onComplete: () => scene.add.tween({
-        targets: text,
-        duration: 800,
-        x: 90,
-        y: 50,
-        alpha: 0,
-        ease: "cubic",
-        onComplete: () => text.destroy()
-      })
-    })
+    this.changeGoldTween(`+${this.earn}G`, "orange")
   }
 }

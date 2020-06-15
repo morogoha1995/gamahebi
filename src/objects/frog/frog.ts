@@ -1,6 +1,7 @@
 import { FrogName } from "../../../types/frog"
 import FrogDatas from "../../datas/frog.json"
 import { Organism } from "../organism"
+import { createFontStyle } from "../../utils"
 
 export class Frog extends Organism {
   name: FrogName
@@ -34,6 +35,9 @@ export class Frog extends Organism {
       ease: "bounce",
       onComplete: () => this.setActive(true)
     })
+
+
+    this.changeGoldTween(`-${this.price}G`, "crimson")
   }
 
   canAttack(snakeCol: number): boolean {

@@ -1,4 +1,5 @@
 import { OrganismName } from "../../types/organism"
+import { createFontStyle } from "../utils"
 
 export class Organism extends Phaser.Physics.Arcade.Image {
   protected hp = 0
@@ -55,6 +56,35 @@ export class Organism extends Phaser.Physics.Arcade.Image {
       scaleY: 0.2,
       y: this.y + 20,
       onComplete: () => this.destroy()
+    })
+  }
+
+  protected changeGoldTween(text: string, color: string) {
+    const scene = this.scene,
+      t = scene.add.text(this.x, this.y, text, createFontStyle(color, 42))
+
+    t
+      .setDepth(49)
+      .setScale(0.5)
+      .setOrigin(0.5)
+      .setRotation(1)
+
+    scene.add.tween({
+      targets: t,
+      duration: 500,
+      y: this.y - 20,
+      scale: 1,
+      rotation: 0,
+      ease: "cubic",
+      onComplete: () => scene.add.tween({
+        targets: t,
+        duration: 800,
+        x: 90,
+        y: 50,
+        alpha: 0,
+        ease: "cubic",
+        onComplete: () => t.destroy()
+      })
     })
   }
 }
