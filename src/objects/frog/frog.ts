@@ -45,7 +45,7 @@ export class Frog extends Organism {
     return snakeCol === this.col && this.nextAttack <= this.scene.time.now
   }
 
-  private calcNextAttack() {
+  protected calcNextAttack() {
     this.nextAttack = this.scene.time.now + this.interval
   }
 
@@ -77,9 +77,5 @@ export class Frog extends Organism {
 
   private calcSellPrice(): number {
     return Math.floor(this.price / 2)
-  }
-
-  attack() {
-    this.calcNextAttack()
   }
 }

@@ -5,6 +5,8 @@ import { Frog } from "../objects/frog/frog"
 import { FrogName } from "../../types/frog"
 import { Bullet } from "../objects/bullet/bullet"
 import { InfoWindow } from "../objects/frog/infoWindow"
+import { Pistol } from "../objects/frog/pistol"
+import { Rapid } from "../objects/frog/rapid"
 
 export class Game extends Phaser.Scene {
   private field!: Field
@@ -111,7 +113,13 @@ export class Game extends Phaser.Scene {
       return
 
     this.shop.buy(name)
-    const frog = new Frog(this, tile.getCenterX(), tile.getCenterY(), name, tY, tX)
+    let frog: Frog
+
+    if (name === "rapid")
+      frog = new Rapid(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
+    else
+      frog = new Pistol(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
+
     frog.on("pointerdown", () => {
       if (this.infoWindow.isOpen)
         return
@@ -179,9 +187,7 @@ export class Game extends Phaser.Scene {
     this.wave.snakeGroup.children.iterate((s: any) =>
       this.frogGroup.children.iterate((f: any) => {
         if (f.canAttack(s.col)) {
-          const b = new Bullet(this, f.x, f.y, f.name)
-          this.bulletGroup.add(b)
-          f.attack()
+          f.attack(this.bulletGroup)
         }
       })
     )
