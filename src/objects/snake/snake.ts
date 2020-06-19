@@ -2,7 +2,6 @@ import SnakeDatas from "../../datas/snake.json"
 import { SnakeName } from "../../../types/snake"
 import { TILE_SIZE, SIDE_BAR_WIDTH, HALF_TILE_SIZE } from "../../constants"
 import { Organism } from "../organism"
-import { createFontStyle } from "../../utils"
 
 export class Snake extends Organism {
   private speed: number
