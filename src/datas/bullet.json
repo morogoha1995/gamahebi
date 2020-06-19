@@ -4,5 +4,8 @@
   },
   "rapid": {
     "speed": 300
+  },
+  "frozen": {
+    "speed": 300
   }
 }

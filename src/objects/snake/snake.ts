@@ -37,7 +37,7 @@ export class Snake extends Organism {
     if (this.isAttack)
       newVy = 0
     else if (this.isSlow)
-      newVy = this.speed / 2
+      newVy = this.speed / 3
 
     this.setVelocityY(newVy)
   }
@@ -59,6 +59,22 @@ export class Snake extends Organism {
       scale: 1.2,
       yoyo: true
     })
+  }
+
+  damaged(atk: number, name: string) {
+    super.damaged(atk, name)
+
+    if (name === "frozen")
+      this.toSlow()
+  }
+
+  private toSlow() {
+    if (this.isSlow)
+      return
+
+    this.isSlow = true
+
+    this.scene.time.delayedCall(3000, () => this.isSlow = false)
   }
 
   getGold(): number {

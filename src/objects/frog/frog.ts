@@ -6,7 +6,7 @@ import { createFontStyle } from "../../utils"
 export class Frog extends Organism {
   name: FrogName
   readonly jaName: string
-  private atk: number
+  private _atk: number
   private price: number
   private interval: number
   readonly row: number
@@ -20,7 +20,7 @@ export class Frog extends Organism {
     const fd = FrogDatas[name]
     this.jaName = fd.jaName
     this.hp = fd.hp
-    this.atk = fd.atk
+    this._atk = fd.atk
     this.price = fd.price
     this.interval = fd.interval
     this.name = name
@@ -41,8 +41,12 @@ export class Frog extends Organism {
     this.changeGoldTween(`-${this.price}G`, "crimson")
   }
 
+  get atk(): number {
+    return this._atk
+  }
+
   canAttack(snakeCol: number): boolean {
-    return snakeCol === this.col && this.nextAttack <= this.scene.time.now
+    return snakeCol === this.col && this.nextAttack <= this.scene.time.now && this.active
   }
 
   protected calcNextAttack() {
@@ -77,5 +81,9 @@ export class Frog extends Organism {
 
   private calcSellPrice(): number {
     return Math.floor(this.price / 2)
+  }
+
+  attack(bulletGroup: Phaser.GameObjects.Group) {
+    // override plz.
   }
 }
