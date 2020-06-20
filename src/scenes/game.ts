@@ -7,6 +7,7 @@ import { InfoWindow } from "../objects/frog/infoWindow"
 import { Pistol } from "../objects/frog/pistol"
 import { Rapid } from "../objects/frog/rapid"
 import { Frozen } from "../objects/frog/frozen"
+import { TitleContainer } from "../objects/titleContainer"
 
 export class Game extends Phaser.Scene {
   private field!: Field
@@ -18,8 +19,15 @@ export class Game extends Phaser.Scene {
   private selectedFrog: Phaser.GameObjects.Image | null = null
   private frogSample: Phaser.GameObjects.Image | null = null
 
+  private isPlaying = false
+
   constructor() {
     super({ key: "game" })
+  }
+
+  init(data: any) {
+    this.isPlaying = data.isPlaying || false
+    this.sound.mute = data.isMute || false
   }
 
   create() {
@@ -34,12 +42,40 @@ export class Game extends Phaser.Scene {
     this.physics.add.overlap(this.wave.snakeGroup, this.bulletGroup, this.hitBullet, undefined, this)
     this.physics.add.overlap(this.frogGroup, this.wave.snakeGroup, this.hitSnake, undefined, this)
 
-    this.addEvents()
+    if (!this.isPlaying)
+      this.createStartWindow()
+    else
+      this.addEvents()
   }
 
   update() {
+    if (!this.isPlaying)
+      return
+
     this.checkFrogAttack()
     this.wave.update()
+  }
+
+  // TODO
+  private createStartWindow() {
+    const startWindow = new TitleContainer(this, "がまへび合戦", "teal", this.sound.mute)
+
+    startWindow.addStartBtn("スタート")
+      .on("pointerdown", () => {
+        this.sound.mute = startWindow.getIsMute()
+        this.sound.play("start")
+
+        this.add.tween({
+          targets: startWindow,
+          duration: 500,
+          alpha: 0,
+          onComplete: () => {
+            this.isPlaying = true
+            this.addEvents()
+            startWindow.destroy()
+          }
+        })
+      })
   }
 
   private addEvents() {

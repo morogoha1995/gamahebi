@@ -3,6 +3,7 @@ import { WIDTH, HEIGHT } from "./constants"
 import { determineZoom } from "./utils"
 import { Boot } from "./scenes/boot"
 import { Game } from "./scenes/game"
+import { Menu } from "./scenes/menu"
 
 window.onload = () => {
   const zoom = determineZoom(window.innerWidth, window.innerHeight)
@@ -23,6 +24,7 @@ window.onload = () => {
     scene: [
       Boot,
       Game,
+      Menu
     ]
   })
 }
