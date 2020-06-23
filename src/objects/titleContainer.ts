@@ -1,19 +1,19 @@
-import { HALF_WIDTH, HALF_HEIGHT } from "../constants"
+import { HALF_WIDTH, HALF_HEIGHT, FONT_SIZE } from "../constants"
 import { createFontStyle } from "../utils"
 
 
 export class TitleContainer extends Phaser.GameObjects.Container {
-  private isMute: boolean
+  private _isMute: boolean
 
   constructor(scene: Phaser.Scene, text: string, color: string, isMute: boolean) {
     super(scene, HALF_WIDTH, HALF_HEIGHT)
 
-    this.isMute = isMute
+    this._isMute = isMute
 
     this
       .add(
         scene.add
-          .text(0, -120, text, createFontStyle(color, 48))
+          .text(0, -120, text, createFontStyle(color, 3))
           .setOrigin(0.5)
       )
       .setAlpha(0)
@@ -27,8 +27,8 @@ export class TitleContainer extends Phaser.GameObjects.Container {
     })
   }
 
-  getIsMute(): boolean {
-    return this.isMute
+  get isMute(): boolean {
+    return this._isMute
   }
 
   addStartBtn(text: string): Phaser.GameObjects.Text {
@@ -44,13 +44,13 @@ export class TitleContainer extends Phaser.GameObjects.Container {
 
     const xMark = this.scene.add.image(x, y, "x")
       .setDepth(30)
-      .setVisible(this.isMute)
+      .setVisible(this._isMute)
     this.add(xMark)
 
     return soundBtn.on("pointerdown", () => {
-      this.isMute = !this.isMute
-      xMark.setVisible(this.isMute)
-      if (!this.isMute)
+      this._isMute = !this._isMute
+      xMark.setVisible(this._isMute)
+      if (!this._isMute)
         this.scene.sound.play("buy")
     })
   }
@@ -61,7 +61,7 @@ export class TitleContainer extends Phaser.GameObjects.Container {
 
 
   private addBtn(text: string, x: number, y: number, color: string, bgColor: string): Phaser.GameObjects.Text {
-    const btn = this.scene.add.text(x, y, text, createFontStyle(color, 30))
+    const btn = this.scene.add.text(x, y, text, createFontStyle(color, 2))
       .setOrigin(0.5)
       .setPadding(6, 6, 6, 6)
       .setBackgroundColor(bgColor)

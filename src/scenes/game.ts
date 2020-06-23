@@ -56,14 +56,13 @@ export class Game extends Phaser.Scene {
     this.wave.update()
   }
 
-  // TODO
   private createStartWindow() {
     const startWindow = new TitleContainer(this, "がまへび合戦", "teal", this.sound.mute)
 
     startWindow.addStartBtn("スタート")
       .on("pointerdown", () => {
-        this.sound.mute = startWindow.getIsMute()
-        this.sound.play("start")
+        this.sound.mute = startWindow.isMute
+        //this.sound.play("start")
 
         this.add.tween({
           targets: startWindow,

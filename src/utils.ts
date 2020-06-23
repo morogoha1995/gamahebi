@@ -1,4 +1,4 @@
-import { WIDTH, HEIGHT } from "./constants"
+import { WIDTH, HEIGHT, FONT_SIZE } from "./constants"
 
 export const determineZoom = (width: number, height: number): number => {
   const zooms = [1, 0.75]
@@ -10,11 +10,11 @@ export const determineZoom = (width: number, height: number): number => {
   return 0.5
 }
 
-export const createFontStyle = (color: string, fontSize = 24, isStroke = true) => {
+export const createFontStyle = (color: string, fontSizeRatio = 1, isStroke = true) => {
   const fontStyle: any = {
     color: color,
     fontFamily: "Meiryo",
-    fontSize: `${fontSize}px`,
+    fontSize: `${FONT_SIZE * fontSizeRatio}px`,
     fontStyle: "bold"
   }
 

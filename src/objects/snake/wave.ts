@@ -1,5 +1,5 @@
 import { SnakeName } from "../../../types/snake"
-import { SIDE_BAR_WIDTH, TILE_SIZE, HALF_TILE_SIZE, HALF_WIDTH, HALF_HEIGHT } from "../../constants"
+import { HALF_WIDTH } from "../../constants"
 import { Snake } from "./snake"
 import { createFontStyle } from "../../utils"
 
@@ -55,7 +55,7 @@ export class Wave {
   }
 
   private waveTextTween() {
-    const t = this.scene.add.text(HALF_WIDTH, 0, `第${this.current}波`, createFontStyle("blue", 48))
+    const t = this.scene.add.text(HALF_WIDTH, 0, `第${this.current}波`, createFontStyle("blue", 3))
     t
       .setOrigin(0.5)
       .setAlpha(0)

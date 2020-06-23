@@ -116,19 +116,18 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     this.baseY = y
     this.setPosition(x, y)
 
-    const btnY = 80,
-      btnFontSize = 32
+    const btnY = 80
 
-    this.title = this.scene.add.text(0, -80, name, createFontStyle("teal", 48))
+    this.title = this.scene.add.text(0, -80, name, createFontStyle("teal", 2))
       .setOrigin(0.5)
 
-    this.upgradeText = this.scene.add.text(-120, btnY, `強化: ${price}G`, createFontStyle("red", btnFontSize))
+    this.upgradeText = this.scene.add.text(-120, btnY, `強化: ${price}G`, createFontStyle("red", 1.5))
       .setInteractive()
       .setBackgroundColor("blue")
       .setPadding(6, 6, 6, 6)
       .setOrigin(0.5)
 
-    this.sellText = this.scene.add.text(120, btnY, `売却: ${sellPrice}G`, createFontStyle("blue", btnFontSize))
+    this.sellText = this.scene.add.text(120, btnY, `売却: ${sellPrice}G`, createFontStyle("blue", 1.5))
       .setInteractive()
       .setPadding(6, 6, 6, 6)
       .setBackgroundColor("green")

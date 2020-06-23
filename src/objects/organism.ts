@@ -61,7 +61,7 @@ export class Organism extends Phaser.Physics.Arcade.Image {
 
   protected changeGoldTween(text: string, color: string) {
     const scene = this.scene,
-      t = scene.add.text(this.x, this.y, text, createFontStyle(color, 42))
+      t = scene.add.text(this.x, this.y, text, createFontStyle(color, 2))
 
     t
       .setDepth(49)
