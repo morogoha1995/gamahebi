@@ -52,8 +52,8 @@ export class Game extends Phaser.Scene {
     if (!this.isPlaying)
       return
 
-    // if (this.wave.checkGameover())
-
+    if (this.wave.checkGameover())
+      this.gameover()
 
     this.checkFrogAttack()
     this.wave.update()
@@ -90,6 +90,14 @@ export class Game extends Phaser.Scene {
     this.input
       .on("pointermove", (e: any) => this.moveSelectedFrog(e.x, e.y))
       .on("pointerup", (e: any) => this.putSelectedFrog(e.x, e.y))
+  }
+
+  private gameover() {
+    this.scene.pause()
+    this.scene.launch("end", {
+      isMute: this.sound.mute,
+      wave: this.wave.current
+    })
   }
 
   private selectFrog(name: FrogName, x: number, y: number) {
