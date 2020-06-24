@@ -52,6 +52,9 @@ export class Game extends Phaser.Scene {
     if (!this.isPlaying)
       return
 
+    // if (this.wave.checkGameover())
+
+
     this.checkFrogAttack()
     this.wave.update()
   }

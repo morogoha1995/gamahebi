@@ -5,7 +5,7 @@ import { createFontStyle } from "../../utils"
 
 export class Wave {
   private scene: Phaser.Scene
-  private current = 1
+  private _current = 1
   private spawnCount = 0
   private maxSpawnCount = 1
   private interval = 1000
@@ -34,6 +34,10 @@ export class Wave {
     this.spawnCount++
   }
 
+  get current(): number {
+    return this._current
+  }
+
   update() {
     if (this.canSpawn())
       this.spawn()
@@ -44,9 +48,18 @@ export class Wave {
 
   private goNext() {
     this.isInNextDelay = true
-    this.current++
+    this._current++
 
     this.waveTextTween()
+  }
+
+  checkGameover(): boolean {
+    let isGameover = false
+    this.snakeGroup.children.iterate((snake: any) => {
+      if (snake.isTouchBottom)
+        isGameover = true
+    })
+    return isGameover
   }
 
   private init() {
@@ -55,7 +68,7 @@ export class Wave {
   }
 
   private waveTextTween() {
-    const t = this.scene.add.text(HALF_WIDTH, 0, `第${this.current}波`, createFontStyle("blue", 3))
+    const t = this.scene.add.text(HALF_WIDTH, 0, `第${this._current}波`, createFontStyle("blue", 3))
     t
       .setOrigin(0.5)
       .setAlpha(0)
@@ -85,7 +98,7 @@ export class Wave {
   }
 
   private upDifficulty() {
-    this.maxSpawnCount += Math.max(1, Math.floor(this.current / 3))
+    this.maxSpawnCount += Math.max(1, Math.floor(this._current / 3))
   }
 
   private isGoNext(): boolean {
@@ -100,7 +113,7 @@ export class Wave {
 
     // enemyNamesからどの名前を取り出すかの値が代入される。
     // 5ウェーブごとに取り出される敵の位が上がる。
-    let enemyIndex = Math.floor(this.current / 5)
+    let enemyIndex = Math.floor(this._current / 5)
     // 生成数が3で割り切れる数の場合、1つ上位の敵を生成する
     if (this.spawnCount % 3 === 0)
       enemyIndex++
