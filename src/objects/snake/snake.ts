@@ -1,6 +1,6 @@
 import SnakeDatas from "../../datas/snake.json"
 import { SnakeName } from "../../../types/snake"
-import { TILE_SIZE, SIDE_BAR_WIDTH, HALF_TILE_SIZE } from "../../constants"
+import { TILE_SIZE, SIDE_BAR_WIDTH, HALF_TILE_SIZE, HEIGHT } from "../../constants"
 import { Organism } from "../organism"
 
 export class Snake extends Organism {
@@ -8,6 +8,7 @@ export class Snake extends Organism {
   private earn: number
   private _isAttack = false
   private isSlow = false
+  private _isTouchBottom = false
 
   constructor(scene: Phaser.Scene, col: number, name: SnakeName) {
     super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 0, name, col)
@@ -22,12 +23,17 @@ export class Snake extends Organism {
     this.setVelocityY(this.speed)
   }
 
-  get isAttack() {
+  get isAttack(): boolean {
     return this._isAttack
+  }
+
+  get isTouchBottom(): boolean {
+    return this._isTouchBottom
   }
 
   update() {
     this.changeVy()
+    this.checkTouchBottom()
   }
 
   private changeVy() {
@@ -39,6 +45,10 @@ export class Snake extends Organism {
       newVy = this.speed / 3
 
     this.setVelocityY(newVy)
+  }
+
+  private checkTouchBottom() {
+    this._isTouchBottom = this.y >= HEIGHT
   }
 
   attack() {
