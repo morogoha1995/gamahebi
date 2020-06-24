@@ -11,7 +11,7 @@ export class Snake extends Organism {
   private _isTouchBottom = false
 
   constructor(scene: Phaser.Scene, col: number, name: SnakeName) {
-    super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 0, name, col)
+    super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 600, name, col)
 
     const sd = SnakeDatas[name]
     this.hp = sd.hp
