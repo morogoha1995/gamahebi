@@ -21,24 +21,23 @@ export class End extends Phaser.Scene {
   private createEndWindow() {
     const endWindow = new TitleContainer(this, "陥落...", "crimson", this.sound.mute)
 
-    endWindow.addStartBtn("もう一回")
-      .on("pointerdown", () => {
-        this.sound.mute = endWindow.isMute
-        // this.sound.play("start")
+    endWindow.addStartBtn("もう一回", () => {
+      this.sound.mute = endWindow.isMute
+      // this.sound.play("start")
 
-        this.add.tween({
-          targets: endWindow,
-          duration: 500,
-          alpha: 0,
-          onComplete: () => this.scene.start("game", {
-            isPlaying: true,
-            isMute: endWindow.isMute
-          })
+      this.add.tween({
+        targets: endWindow,
+        duration: 500,
+        alpha: 0,
+        onComplete: () => this.scene.start("game", {
+          isPlaying: true,
+          isMute: endWindow.isMute
         })
       })
+    })
 
-    endWindow.addTweetBtn()
-      .on("pointerdown", () => this.tweet())
+
+    endWindow.addTweetBtn(() => this.tweet())
   }
 
   private tweet() {

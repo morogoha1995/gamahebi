@@ -32,40 +32,47 @@ export class TitleContainer extends Phaser.GameObjects.Container {
     return this._isMute
   }
 
-  addStartBtn(text: string): Phaser.GameObjects.Text {
+  addStartBtn(text: string, fn: Function) {
     const quarterWidth = HALF_WIDTH / 3
-    return this.addBtn(text, -quarterWidth, 0, "limegreen", "lightgreen")
+    this.addBtn(text, -quarterWidth, 0, "limegreen", "lightgreen", fn)
   }
 
-  private addSoundBtn(): Phaser.GameObjects.Text {
+  private addSoundBtn() {
     const x = HALF_WIDTH / 2,
       y = 0,
-      soundBtn = this.addBtn("音", x, y, "salmon", "darkorange"),
       xMark = this.scene.add.image(x, y, "x")
         .setDepth(30)
         .setVisible(this._isMute)
 
-    this.add(xMark)
-
-    return soundBtn.on("pointerdown", () => {
+    this.addBtn("音", x, y, "salmon", "darkorange", () => {
       this._isMute = !this._isMute
       xMark.setVisible(this._isMute)
-      if (!this._isMute)
-        this.scene.sound.play("buy")
+      //if (!this._isMute)
+      // this.scene.sound.play("buy")
     })
+
+    this.add(xMark)
   }
 
-  addTweetBtn(): Phaser.GameObjects.Text {
-    return this.addBtn("ツイートする", 0, HALF_HEIGHT / 2, "royalblue", "#00acee")
+  addTweetBtn(fn: Function) {
+    this.addBtn("ツイートする", 0, HALF_HEIGHT / 2, "royalblue", "#00acee", fn)
   }
 
 
-  private addBtn(text: string, x: number, y: number, color: string, bgColor: string): Phaser.GameObjects.Text {
+  private addBtn(text: string, x: number, y: number, color: string, bgColor: string, fn: Function): Phaser.GameObjects.Text {
     const btn = this.scene.add.text(x, y, text, createFontStyle(color, 2))
       .setOrigin(0.5)
       .setPadding(6, 6, 6, 6)
       .setBackgroundColor(bgColor)
       .setInteractive()
+      .on("pointerdown", () => this.scene.add.tween({
+        targets: btn,
+        duration: 50,
+        y: y + 10,
+        scale: 0.9,
+        yoyo: true,
+        onComplete: fn
+      }))
 
     this.add(btn)
 
