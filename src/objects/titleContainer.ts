@@ -34,7 +34,14 @@ export class TitleContainer extends Phaser.GameObjects.Container {
 
   addStartBtn(text: string, fn: Function) {
     const quarterWidth = HALF_WIDTH / 3
-    this.addBtn(text, -quarterWidth, 0, "limegreen", "lightgreen", fn)
+    this.addBtn(text, -quarterWidth, 0, "limegreen", "lightgreen", () => {
+      this.scene.add.tween({
+        targets: this,
+        duration: 500,
+        alpha: 0,
+        onComplete: fn,
+      })
+    })
   }
 
   private addSoundBtn() {
@@ -59,7 +66,7 @@ export class TitleContainer extends Phaser.GameObjects.Container {
   }
 
 
-  private addBtn(text: string, x: number, y: number, color: string, bgColor: string, fn: Function): Phaser.GameObjects.Text {
+  private addBtn(text: string, x: number, y: number, color: string, bgColor: string, fn: Function) {
     const btn = this.scene.add.text(x, y, text, createFontStyle(color, 2))
       .setOrigin(0.5)
       .setPadding(6, 6, 6, 6)
@@ -75,7 +82,5 @@ export class TitleContainer extends Phaser.GameObjects.Container {
       }))
 
     this.add(btn)
-
-    return btn
   }
 }
