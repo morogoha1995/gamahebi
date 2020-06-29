@@ -38,7 +38,6 @@ export class Shop {
       }
       y += height + padding
     }
-
   }
 
   canBuy(value: number): boolean {

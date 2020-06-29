@@ -71,6 +71,7 @@ export class Frog extends Organism {
   }
 
   sell() {
+    this.changeGoldTween(`+${this.price}G`, "orange")
     this.destroy()
   }
 
