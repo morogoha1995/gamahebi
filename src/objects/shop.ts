@@ -4,7 +4,7 @@ import { SIDE_BAR_WIDTH } from "../constants"
 import { createFontStyle } from "../utils"
 
 export class Shop {
-  private gold = 50
+  private gold = 30
   private frogs: Frogs = {}
   private goldText: Phaser.GameObjects.Text
 
