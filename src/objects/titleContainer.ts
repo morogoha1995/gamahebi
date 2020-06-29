@@ -1,4 +1,4 @@
-import { HALF_WIDTH, HALF_HEIGHT } from "../constants"
+import { HALF_WIDTH, HALF_HEIGHT, HEIGHT, WIDTH } from "../constants"
 import { createFontStyle } from "../utils"
 
 
@@ -10,14 +10,18 @@ export class TitleContainer extends Phaser.GameObjects.Container {
 
     this._isMute = isMute
 
-    const titleY = HALF_HEIGHT / 2
-    this
-      .add(
-        scene.add
-          .text(0, -titleY, text, createFontStyle(color, 3))
-          .setOrigin(0.5)
-      )
+    const curtain = scene.add.rectangle(0, 0, WIDTH, HEIGHT, 0x606060, 0.3),
+      titleY = HALF_HEIGHT / 2,
+      title = scene.add
+        .text(0, -titleY, text, createFontStyle(color, 3))
+        .setOrigin(0.5)
+
+    this.add([
+      curtain,
+      title
+    ])
       .setAlpha(0)
+
     this.addSoundBtn()
 
     scene.add.existing(this)
@@ -75,7 +79,6 @@ export class TitleContainer extends Phaser.GameObjects.Container {
       .on("pointerdown", () => this.scene.add.tween({
         targets: btn,
         duration: 50,
-        y: y + 10,
         scale: 0.9,
         yoyo: true,
         onComplete: fn

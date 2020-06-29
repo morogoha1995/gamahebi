@@ -8,6 +8,7 @@ import { Pistol } from "../objects/frog/pistol"
 import { Rapid } from "../objects/frog/rapid"
 import { Frozen } from "../objects/frog/frozen"
 import { TitleContainer } from "../objects/titleContainer"
+import { WIDTH, HEIGHT } from "../constants"
 
 export class Game extends Phaser.Scene {
   private field!: Field
