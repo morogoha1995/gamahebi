@@ -103,25 +103,27 @@ export class Game extends Phaser.Scene {
   }
 
   private removeFrog() {
-    if (!this.selectFrog)
+    if (!this.selectedFrog)
       return
 
-    this.selectedFrog?.destroy()
+    this.selectedFrog.destroy()
     this.selectedFrog = null
     this.frogSample?.destroy()
     this.frogSample = null
   }
 
   private moveSelectedFrog(x: number, y: number) {
-    if (!this.selectFrog)
+    if (!this.selectedFrog)
       return
 
-    this.selectedFrog?.setPosition(x, y)
+    this.selectedFrog.setPosition(x, y)
 
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
-    if (!tile)
+    if (!tile) {
+      this.frogSample?.setVisible(false)
       return
+    }
 
     if (this.field.canPutFrog(tile.y, tile.x))
       this.frogSample?.setPosition(tile.getCenterX(), tile.getCenterY())
