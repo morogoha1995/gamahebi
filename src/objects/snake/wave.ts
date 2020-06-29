@@ -88,6 +88,7 @@ export class Wave {
         duration: 500,
         alpha: 0,
         y: 0,
+        ease: "cubic",
         onComplete: () => {
           t.destroy()
           this.init()
