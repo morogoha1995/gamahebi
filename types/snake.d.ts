@@ -1,1 +1,1 @@
-export type SnakeName = "normal"
+export type SnakeName = "normalSnake" | "thinSnake" | "ultSnake"

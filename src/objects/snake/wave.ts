@@ -7,8 +7,8 @@ export class Wave {
   private scene: Phaser.Scene
   private _current = 1
   private spawnCount = 0
-  private maxSpawnCount = 1
-  private interval = 1000
+  private maxSpawnCount = 5
+  private interval = 2000
   private nextSpawn = 0
   private isInNextDelay = false
   snakeGroup: Phaser.GameObjects.Group
@@ -109,14 +109,16 @@ export class Wave {
   private determineSnakeName(): SnakeName {
     // 上から弱い順。
     const enemyNames: SnakeName[] = [
-      "normal",
+      "normalSnake",
+      "thinSnake",
+      "ultSnake",
     ]
 
     // enemyNamesからどの名前を取り出すかの値が代入される。
     // 5ウェーブごとに取り出される敵の位が上がる。
     let enemyIndex = Math.floor(this._current / 5)
     // 生成数が3で割り切れる数の場合、1つ上位の敵を生成する
-    if (this.spawnCount % 3 === 0)
+    if (this.spawnCount !== 0 && this.spawnCount % 3 === 0)
       enemyIndex++
     // enemyNamesの要素数を超えないように低い方を代入し直す。
     enemyIndex = Math.min(enemyIndex, enemyNames.length - 1)
