@@ -7,7 +7,7 @@ export class Frozen extends Frog {
   }
 
   attack(bulletGroup: Phaser.GameObjects.Group) {
-    bulletGroup.add(new Bullet(this.scene, this.x, this.y, "frozen"))
+    bulletGroup.add(new Bullet(this.scene, this.x, this.y, "frozen", this.atk))
     this.calcNextAttack()
   }
 }

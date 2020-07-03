@@ -59,10 +59,11 @@ export class Frog extends Organism {
   upgrade() {
     this.changeGoldTween(`-${this.price}G`, "crimson")
     this.grade++
-    this.price = this.calcUpgradePrice()
+    this.price = this.upgradePrice
+    this._atk *= this.grade
   }
 
-  getUpgradePrice(): number {
+  get upgradePrice(): number {
     return this.calcUpgradePrice()
   }
 
@@ -75,7 +76,7 @@ export class Frog extends Organism {
     this.destroy()
   }
 
-  getSellPrice(): number {
+  get sellPrice(): number {
     return this.calcSellPrice()
   }
 

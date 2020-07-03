@@ -2,16 +2,18 @@ import BulletDatas from "../../datas/bullet.json"
 import { FrogName } from "../../../types/frog"
 
 export class Bullet extends Phaser.Physics.Arcade.Image {
-  private speed: number
+  readonly speed: number
   private _inDieAnims = false
+  readonly atk: number
 
-  constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName) {
+  constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName, atk: number) {
     super(scene, x, y, `${name}Bullet`)
 
     const bd = BulletDatas[name]
 
     this.speed = bd.speed
     this.name = name
+    this.atk = atk
 
     scene.add.existing(this)
     scene.physics.add.existing(this)

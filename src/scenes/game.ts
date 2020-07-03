@@ -164,15 +164,15 @@ export class Game extends Phaser.Scene {
       if (this.infoWindow.isOpen)
         return
 
-      const upgradePrice = frog.getUpgradePrice(),
-        sellPrice = frog.getSellPrice()
+      const upgradePrice = frog.upgradePrice,
+        sellPrice = frog.sellPrice
 
       this.infoWindow.setInfo(
         frog.x,
         frog.y,
         frog.getInfoName(),
         upgradePrice,
-        frog.getSellPrice()
+        sellPrice
       )
       this.infoWindow.tween("open")
 
@@ -181,7 +181,7 @@ export class Game extends Phaser.Scene {
           if (this.infoWindow.inAnims)
             return
 
-          if (this.shop.canBuy(frog.getUpgradePrice())) {
+          if (this.shop.canBuy(upgradePrice)) {
             this.infoWindow.tween("upgrade")
             this.shop.upgrade(upgradePrice)
             frog.upgrade()
@@ -208,7 +208,7 @@ export class Game extends Phaser.Scene {
       return
 
     bullet.die()
-    snake.damaged(1, bullet.name)
+    snake.damaged(bullet.atk, bullet.name)
     if (snake.isDead())
       this.shop.addGold(snake.getGold())
   }

@@ -7,7 +7,7 @@ export class Pistol extends Frog {
   }
 
   attack(bulletGroup: Phaser.GameObjects.Group) {
-    bulletGroup.add(new Bullet(this.scene, this.x, this.y, "pistol"))
+    bulletGroup.add(new Bullet(this.scene, this.x, this.y, "pistol", this.atk))
     this.calcNextAttack()
   }
 }

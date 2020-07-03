@@ -13,7 +13,7 @@ export class Rapid extends Frog {
     for (let i = 0; i < shotCount; i++) {
       const delay = interval * i
       this.scene.time.delayedCall(delay, () =>
-        bulletGroup.add(new Bullet(this.scene, this.x, this.y, "pistol"))
+        bulletGroup.add(new Bullet(this.scene, this.x, this.y, "pistol", this.atk))
       )
     }
 
