@@ -7,16 +7,13 @@ import { End } from "./scenes/end"
 
 window.onload = () => {
   new Phaser.Game({
+    parent: 'app',
     type: Phaser.AUTO,
     width: WIDTH,
     height: HEIGHT,
-    parent: 'app',
     scale: {
       mode: Phaser.Scale.FIT,
-      max: {
-        width: WIDTH,
-        height: HEIGHT
-      }
+      autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {
       default: "arcade",
