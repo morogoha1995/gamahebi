@@ -11,6 +11,7 @@ export class Boot extends Phaser.Scene {
       .image("pistol", "assets/imgs/frog/pistol.png")
       .image("rapid", "assets/imgs/frog/rapid.png")
       .image("frozen", "assets/imgs/frog/frozen.png")
+      .image("shield", "assets/imgs/frog/shield.png")
       .image("pistolBullet", "assets/imgs/frog/bullet/pistol.png")
       .image("frozenBullet", "assets/imgs/frog/bullet/frozen.png")
       .image("normalSnake", "assets/imgs/snake/normal-snake.png")

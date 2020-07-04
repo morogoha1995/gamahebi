@@ -1,12 +1,12 @@
 import BulletDatas from "../../datas/bullet.json"
-import { FrogName } from "../../../types/frog"
+import { ShootableName } from "../../../types/frog"
 
 export class Bullet extends Phaser.Physics.Arcade.Image {
   readonly speed: number
   private _inDieAnims = false
   readonly atk: number
 
-  constructor(scene: Phaser.Scene, x: number, y: number, name: FrogName, atk: number) {
+  constructor(scene: Phaser.Scene, x: number, y: number, name: ShootableName, atk: number) {
     super(scene, x, y, `${name}Bullet`)
 
     const bd = BulletDatas[name]

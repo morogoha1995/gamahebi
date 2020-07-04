@@ -19,5 +19,12 @@
     "atk": 1,
     "price": 15,
     "interval": 2000
+  },
+  "shield": {
+    "jaName": "盾ガマ",
+    "hp": 20,
+    "atk": 0,
+    "price": 10,
+    "interval": 2000
   }
 }

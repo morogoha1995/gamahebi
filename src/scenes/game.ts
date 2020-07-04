@@ -9,6 +9,7 @@ import { Rapid } from "../objects/frog/rapid"
 import { Frozen } from "../objects/frog/frozen"
 import { TitleContainer } from "../objects/titleContainer"
 import { WIDTH, HEIGHT } from "../constants"
+import { Shield } from "../objects/frog/shield"
 
 export class Game extends Phaser.Scene {
   private field!: Field
@@ -157,6 +158,8 @@ export class Game extends Phaser.Scene {
       frog = new Rapid(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
     else if (name === "frozen")
       frog = new Frozen(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
+    else if (name === "shield")
+      frog = new Shield(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
     else
       frog = new Pistol(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
 
