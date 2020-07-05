@@ -8,6 +8,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
   private baseX = 0
   private baseY = 0
   private title: Phaser.GameObjects.Text
+  private hp: Phaser.GameObjects.Text
   private upgradeText: Phaser.GameObjects.Text
   private sellText: Phaser.GameObjects.Text
 
@@ -15,6 +16,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     super(scene)
 
     this.title = scene.add.text(0, 0, "")
+    this.hp = scene.add.text(0, 0, "")
     this.upgradeText = scene.add.text(0, 0, "")
     this.sellText = scene.add.text(0, 0, "")
 
@@ -111,7 +113,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     })
   }
 
-  setInfo(x: number, y: number, name: string, price: number, sellPrice: number) {
+  setInfo(x: number, y: number, name: string, price: number, sellPrice: number, hp: string) {
     this.baseX = x
     this.baseY = y
     this.setPosition(x, y)
@@ -119,6 +121,9 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     const btnY = 80
 
     this.title = this.scene.add.text(0, -80, name, createFontStyle("teal", 2))
+      .setOrigin(0.5)
+
+    this.hp = this.scene.add.text(0, 0, hp, createFontStyle("crimson", 1.5))
       .setOrigin(0.5)
 
     this.upgradeText = this.scene.add.text(-120, btnY, `強化: ${price}G`, createFontStyle("red", 1.5))
@@ -135,6 +140,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
 
     this.add([
       this.title,
+      this.hp,
       this.upgradeText,
       this.sellText
     ])
@@ -176,6 +182,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     this._inAnims = false
     this.remove([
       this.title,
+      this.hp,
       this.upgradeText,
       this.sellText,
     ], true)

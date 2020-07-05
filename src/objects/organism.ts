@@ -2,7 +2,7 @@ import { OrganismName } from "../../types/organism"
 import { createFontStyle } from "../utils"
 
 export class Organism extends Phaser.Physics.Arcade.Image {
-  protected hp = 0
+  protected _hp = 0
   readonly col: number
   private inDamagedTween = false
 
@@ -15,9 +15,13 @@ export class Organism extends Phaser.Physics.Arcade.Image {
     scene.physics.add.existing(this)
   }
 
+  get hp(): number {
+    return this._hp
+  }
+
 
   damaged(atk: number, name: string) {
-    this.hp -= atk
+    this._hp -= atk
 
     if (this.isDead())
       this.die()
@@ -42,7 +46,7 @@ export class Organism extends Phaser.Physics.Arcade.Image {
   }
 
   isDead(): boolean {
-    return this.hp <= 0
+    return this._hp <= 0
   }
 
   private die() {

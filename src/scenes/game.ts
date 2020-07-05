@@ -173,9 +173,10 @@ export class Game extends Phaser.Scene {
       this.infoWindow.setInfo(
         frog.x,
         frog.y,
-        frog.getInfoName(),
+        frog.nameInfo,
         upgradePrice,
-        sellPrice
+        sellPrice,
+        frog.hpInfo
       )
       this.infoWindow.tween("open")
 

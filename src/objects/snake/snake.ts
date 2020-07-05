@@ -14,7 +14,7 @@ export class Snake extends Organism {
     super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 0, name, col)
 
     const sd = SnakeDatas[name]
-    this.hp = sd.hp
+    this._hp = sd.hp
     this.speed = sd.speed
     this.earn = sd.earn
 

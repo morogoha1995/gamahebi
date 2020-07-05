@@ -5,6 +5,7 @@ import { Organism } from "../organism"
 export class Frog extends Organism {
   name: FrogName
   readonly jaName: string
+  readonly maxHp: number
   private _atk: number
   private price: number
   private interval: number
@@ -18,7 +19,8 @@ export class Frog extends Organism {
 
     const fd = FrogDatas[name]
     this.jaName = fd.jaName
-    this.hp = fd.hp
+    this._hp = fd.hp
+    this.maxHp = fd.hp
     this._atk = fd.atk
     this.price = fd.price
     this.interval = fd.interval
@@ -52,8 +54,12 @@ export class Frog extends Organism {
     this.nextAttack = this.scene.time.now + this.interval
   }
 
-  getInfoName(): string {
-    return this.grade === 1 ? this.jaName : `${this.jaName} +${this.grade}`
+  get nameInfo(): string {
+    return this.grade === 1 ? this.jaName : `${this.jaName} +${this.grade - 1}`
+  }
+
+  get hpInfo(): string {
+    return `HP:${this._hp}/${this.maxHp}`
   }
 
   upgrade() {
