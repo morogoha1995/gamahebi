@@ -9,6 +9,7 @@ export class Snake extends Organism {
   private _isAttack = false
   private isSlow = false
   private _isTouchBottom = false
+  private slowImg: Phaser.GameObjects.Image
 
   constructor(scene: Phaser.Scene, col: number, name: SnakeName) {
     super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 0, name, col)
@@ -17,6 +18,11 @@ export class Snake extends Organism {
     this._hp = sd.hp
     this.speed = sd.speed
     this.earn = sd.earn
+    this.slowImg = scene.add.image(this.x, this.y, "ice")
+      .setDepth(21)
+      .setAlpha(0.8)
+      .setScale(0.8)
+      .setVisible(false)
 
     this.setDepth(20)
     this.body.position.set(this.x, 0)
@@ -45,6 +51,9 @@ export class Snake extends Organism {
       newVy = this.speed / 3
 
     this.setVelocityY(newVy)
+
+    if (this.isSlow && this.slowImg)
+      this.slowImg.setY(this.y)
   }
 
   private checkTouchBottom() {
@@ -83,7 +92,14 @@ export class Snake extends Organism {
 
     this.isSlow = true
 
-    this.scene.time.delayedCall(3000, () => this.isSlow = false)
+    this.slowImg.setVisible(true)
+
+    this.scene.time.delayedCall(3000, () => this.recoverFromSlow())
+  }
+
+  private recoverFromSlow() {
+    this.isSlow = false
+    this.slowImg.setVisible(false)
   }
 
   getGold(): number {
