@@ -4,6 +4,7 @@ import { createFontStyle } from "../utils"
 
 export class TitleContainer extends Phaser.GameObjects.Container {
   private _isMute: boolean
+  private isClosing = false
 
   constructor(scene: Phaser.Scene, text: string, color: string, isMute: boolean) {
     super(scene, HALF_WIDTH, HALF_HEIGHT)
@@ -39,6 +40,11 @@ export class TitleContainer extends Phaser.GameObjects.Container {
   addStartBtn(text: string, fn: Function) {
     const quarterWidth = HALF_WIDTH / 3
     this.addBtn(text, -quarterWidth, 0, "limegreen", "lightgreen", () => {
+      if (this.isClosing)
+        return
+
+      this.isClosing = true
+
       this.scene.add.tween({
         targets: this,
         duration: 500,
