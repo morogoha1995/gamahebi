@@ -10,6 +10,7 @@ export class Snake extends Organism {
   private isSlow = false
   private _isTouchBottom = false
   private slowImg: Phaser.GameObjects.Image
+  private moveTween: Phaser.Tweens.Tween
 
   constructor(scene: Phaser.Scene, col: number, name: SnakeName) {
     super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 0, name, col)
@@ -23,11 +24,11 @@ export class Snake extends Organism {
       .setScale(0.8)
       .setVisible(false)
 
-    this.setScale(0.75, 1)
+    this.setScale(0.9, 1)
     //.setDepth(20)
-    scene.add.tween({
+    this.moveTween = scene.add.tween({
       targets: this,
-      duration: 750,
+      duration: 500,
       scaleX: 1,
       scaleY: 0.75,
       yoyo: true,
@@ -74,8 +75,12 @@ export class Snake extends Organism {
       return
 
     this._isAttack = true
+    this.moveTween.stop(0)
     this.attackTween()
-    this.scene.time.delayedCall(1000, () => this._isAttack = false)
+    this.scene.time.delayedCall(1000, () => {
+      this._isAttack = false
+      this.moveTween.restart()
+    })
   }
 
   private attackTween() {
