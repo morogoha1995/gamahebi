@@ -19,12 +19,21 @@ export class Snake extends Organism {
     this.speed = sd.speed
     this.earn = sd.earn
     this.slowImg = scene.add.image(this.x, this.y, "ice")
-      .setDepth(21)
-      .setAlpha(0.8)
+      //.setDepth(21)
       .setScale(0.8)
       .setVisible(false)
 
-    this.setDepth(20)
+    this.setScale(0.75, 1)
+    //.setDepth(20)
+    scene.add.tween({
+      targets: this,
+      duration: 750,
+      scaleX: 1,
+      scaleY: 0.75,
+      yoyo: true,
+      repeat: -1
+    })
+
     this.body.position.set(this.x, 0)
     this.setVelocityY(this.speed)
   }
@@ -40,6 +49,9 @@ export class Snake extends Organism {
   update() {
     this.changeVy()
     this.checkTouchBottom()
+
+    if (this.isSlow && this.slowImg.visible)
+      this.slowImg.setY(this.y)
   }
 
   private changeVy() {
@@ -51,9 +63,6 @@ export class Snake extends Organism {
       newVy = this.speed / 3
 
     this.setVelocityY(newVy)
-
-    if (this.isSlow && this.slowImg)
-      this.slowImg.setY(this.y)
   }
 
   private checkTouchBottom() {
@@ -84,20 +93,24 @@ export class Snake extends Organism {
 
     if (name === "frozen")
       this.toSlow()
+
+    if (this.isDead && this.slowImg.visible)
+      this.slowImg.setVisible(false)
   }
 
   private toSlow() {
-    if (this.isSlow)
+    if (this.isSlow || this.isDead)
       return
 
     this.isSlow = true
-
     this.slowImg.setVisible(true)
-
     this.scene.time.delayedCall(3000, () => this.recoverFromSlow())
   }
 
   private recoverFromSlow() {
+    if (this.isDead)
+      return
+
     this.isSlow = false
     this.slowImg.setVisible(false)
   }

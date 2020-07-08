@@ -208,12 +208,12 @@ export class Game extends Phaser.Scene {
   }
 
   private hitBullet(snake: any, bullet: any) {
-    if (bullet.isDying || snake.isDead())
+    if (bullet.isDying || snake.isDead)
       return
 
     bullet.die()
     snake.damaged(bullet.atk, bullet.name)
-    if (snake.isDead())
+    if (snake.isDead)
       this.shop.addGold(snake.getGold())
   }
 
@@ -223,7 +223,7 @@ export class Game extends Phaser.Scene {
 
     snake.attack()
     frog.damaged(1)
-    if (frog.isDead())
+    if (frog.isDead)
       this.field.destroyFrog(frog.row, frog.col)
   }
 
