@@ -190,4 +190,14 @@ export class InfoWindow extends Phaser.GameObjects.Container {
       .setVisible(false)
       .setActive(false)
   }
+
+  reviseHpText(value: string) {
+    this.hp.setText(value)
+  }
+
+  // ガマの位置からどのガマのInfoWindowかを割り出す
+  // 渡されたx, y(ガマのx, y)と現在のInfoWindowのbaseX, baseYが同じ値だった場合、そのガマのInfoWindowが開かれているということになる
+  determineFromFrogPos(x: number, y: number): boolean {
+    return x === this.baseX && y === this.baseY
+  }
 }
