@@ -226,7 +226,10 @@ export class Game extends Phaser.Scene {
 
     if (this.infoWindow.isOpen)
       if (this.infoWindow.determineFromFrogPos(frog.x, frog.y))
-        this.infoWindow.reviseHpText(frog.hpInfo)
+        if (frog.isDead)
+          this.infoWindow.tween("close")
+        else
+          this.infoWindow.reviseHpText(frog.hpInfo)
 
     if (frog.isDead)
       this.field.destroyFrog(frog.row, frog.col)

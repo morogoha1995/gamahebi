@@ -31,6 +31,7 @@ export class Snake extends Organism {
       duration: 500,
       scaleX: 1,
       scaleY: 0.75,
+      ease: "Power2",
       yoyo: true,
       repeat: -1
     })
@@ -88,7 +89,8 @@ export class Snake extends Organism {
       targets: this,
       duration: 200,
       y: this.y + 20,
-      scale: 1.2,
+      //scale: 1.2,
+      ease: "Power3",
       yoyo: true
     })
   }
