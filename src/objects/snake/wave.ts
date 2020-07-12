@@ -99,7 +99,9 @@ export class Wave {
   }
 
   private upDifficulty() {
-    this.maxSpawnCount += Math.max(1, Math.floor(this._current / 3))
+    this.maxSpawnCount += Math.max(1, Math.floor(this._current / 5))
+    if (this.interval >= 500)
+      this.interval -= 100
   }
 
   private isGoNext(): boolean {

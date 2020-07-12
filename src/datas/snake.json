@@ -1,19 +1,19 @@
 {
   "normalSnake": {
     "hp": 5,
-    "speed": 25,
+    "speed": 20,
     "col": 1,
     "earn": 5
   },
   "thinSnake": {
     "hp": 3,
-    "speed": 50,
+    "speed": 40,
     "col": 1,
     "earn": 5
   },
   "ultSnake": {
     "hp": 8,
-    "speed": 35,
+    "speed": 30,
     "col": 1,
     "earn": 5
   }
