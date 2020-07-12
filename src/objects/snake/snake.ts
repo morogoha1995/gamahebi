@@ -24,16 +24,15 @@ export class Snake extends Organism {
       .setScale(0.8)
       .setVisible(false)
 
-    this.setScale(0.9, 1)
     //.setDepth(20)
     this.moveTween = scene.add.tween({
       targets: this,
-      duration: 500,
-      scaleX: 1,
+      duration: 300,
+      scaleX: 1.1,
       scaleY: 0.75,
-      ease: "Power2",
       yoyo: true,
-      repeat: -1
+      repeat: -1,
+      repeatDelay: 100,
     })
 
     this.body.position.set(this.x, 0)
@@ -77,6 +76,7 @@ export class Snake extends Organism {
 
     this._isAttack = true
     this.moveTween.stop(0)
+    this.setScale(1)
     this.attackTween()
     this.scene.time.delayedCall(1000, () => {
       this._isAttack = false
