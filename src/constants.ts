@@ -6,4 +6,3 @@ export const WIDTH = 640,
   HALF_TILE_SIZE = TILE_SIZE / 2,
   SIDE_BAR_WIDTH = 160,
   FONT_SIZE = 24
-

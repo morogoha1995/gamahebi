@@ -18,6 +18,8 @@ export class Boot extends Phaser.Scene {
       .image("thinSnake", "assets/imgs/snake/thin-snake.png")
       .image("ultSnake", "assets/imgs/snake/ult-snake.png")
       .image("ice", "assets/imgs/ice.png")
+      .image("hole", "assets/imgs/hole.png")
+      .image("pond", "assets/imgs/pond.png")
       .spritesheet("tiles", "assets/imgs/tiles.png", { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE })
   }
 
