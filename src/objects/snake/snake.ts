@@ -27,7 +27,7 @@ export class Snake extends Organism {
     //.setDepth(20)
     this.moveTween = scene.add.tween({
       targets: this,
-      duration: 300,
+      duration: 500,
       scaleX: 1.1,
       scaleY: 0.75,
       yoyo: true,
