@@ -12,11 +12,11 @@ export class Snake extends Organism {
   private slowImg: Phaser.GameObjects.Image
   private moveTween: Phaser.Tweens.Tween
 
-  constructor(scene: Phaser.Scene, col: number, name: SnakeName) {
+  constructor(scene: Phaser.Scene, col: number, name: SnakeName, hpMultiple: number) {
     super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 0, name, col)
 
     const sd = SnakeDatas[name]
-    this._hp = sd.hp
+    this._hp = sd.hp * hpMultiple
     this.speed = sd.speed
     this.earn = sd.earn
     this.slowImg = scene.add.image(this.x, this.y, "ice")

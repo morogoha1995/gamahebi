@@ -29,9 +29,13 @@ export class Wave {
   private spawn() {
     const xCol = Phaser.Math.Between(0, 4)
     const name = this.determineSnakeName()
-    this.snakeGroup.add(new Snake(this.scene, xCol, name))
+    this.snakeGroup.add(new Snake(this.scene, xCol, name, this.hpMultiple))
     this.calcNextSpawn()
     this.spawnCount++
+  }
+
+  get hpMultiple(): number {
+    return Math.floor(this._current % 10) + 1
   }
 
   get current(): number {
@@ -98,14 +102,27 @@ export class Wave {
     })
   }
 
+  // _currentの値によって難易度を変える
   private upDifficulty() {
-    this.maxSpawnCount += Math.max(1, Math.floor(this._current / 5))
-    if (this.interval >= 500)
-      this.interval -= 100
+    this.maxSpawnCount++
+    this.interval -= 150
+
+    if (this._current % 10 === 0)
+      this.initDifficulty()
+  }
+
+  private initDifficulty() {
+    this.maxSpawnCount = 5
+    this.interval = 2000
   }
 
   private isGoNext(): boolean {
     return !this.isInNextDelay && this.spawnCount === this.maxSpawnCount && this.snakeGroup.getLength() === 0
+  }
+
+  get onesPlace() {
+    const c = this._current.toString()
+    return Number(c[c.length - 1])
   }
 
   private determineSnakeName(): SnakeName {
@@ -117,8 +134,8 @@ export class Wave {
     ]
 
     // enemyNamesからどの名前を取り出すかの値が代入される。
-    // 5ウェーブごとに取り出される敵の位が上がる。
-    let enemyIndex = Math.floor(this._current / 5)
+    // 3ウェーブごとに取り出される敵の位が上がる。
+    let enemyIndex = Math.floor(this.onesPlace / 3)
     // 生成数が3で割り切れる数の場合、1つ上位の敵を生成する
     if (this.spawnCount !== 0 && this.spawnCount % 3 === 0)
       enemyIndex++
