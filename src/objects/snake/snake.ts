@@ -4,8 +4,8 @@ import { TILE_SIZE, SIDE_BAR_WIDTH, HALF_TILE_SIZE, HEIGHT } from "../../constan
 import { Organism } from "../organism"
 
 export class Snake extends Organism {
-  private speed: number
-  private earn: number
+  private readonly speed: number
+  private readonly earn: number
   private _isAttack = false
   private isSlow = false
   private _isTouchBottom = false
@@ -16,15 +16,13 @@ export class Snake extends Organism {
     super(scene, TILE_SIZE * col + SIDE_BAR_WIDTH + HALF_TILE_SIZE, 0, name, col)
 
     const sd = SnakeDatas[name]
-    this._hp = sd.hp * hpMultiple
+    this._hp = Math.floor(sd.hp * hpMultiple)
     this.speed = sd.speed
     this.earn = sd.earn
     this.slowImg = scene.add.image(this.x, this.y, "ice")
-      //.setDepth(21)
       .setScale(0.8)
       .setVisible(false)
 
-    //.setDepth(20)
     this.moveTween = scene.add.tween({
       targets: this,
       duration: 500,
@@ -71,16 +69,16 @@ export class Snake extends Organism {
   }
 
   attack() {
-    if (this.isAttack)
+    if (this._isAttack)
       return
 
     this._isAttack = true
-    this.moveTween.stop(0)
+    this.moveTween.pause()
     this.setScale(1)
     this.attackTween()
     this.scene.time.delayedCall(1000, () => {
       this._isAttack = false
-      this.moveTween.restart()
+      this.moveTween.resume()
     })
   }
 
