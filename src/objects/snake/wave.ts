@@ -92,8 +92,8 @@ export class Wave {
         ease: "cubic",
         onComplete: () => {
           t.destroy()
-          this.init()
           this.upDifficulty()
+          this.init()
         }
       })
     })
@@ -104,7 +104,7 @@ export class Wave {
     this.maxSpawnCount++
     this.interval -= 150
 
-    if (this._current % 6 === 0)
+    if (this._current % 2 === 0)
       this.hpMultiple += 0.2
 
     if (this._current % 10 === 0)

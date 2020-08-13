@@ -6,10 +6,11 @@ export class Frog extends Organism {
   name: FrogName
   private readonly jaName: string
   private readonly maxHp: number
+  private readonly baseAtk: number
   private _atk: number
   private price: number
   private interval: number
-  private readonly _row: number
+  readonly row: number
 
   private grade = 1
   private nextAttack = 0
@@ -19,13 +20,12 @@ export class Frog extends Organism {
 
     const fd = FrogDatas[name]
     this.jaName = fd.jaName
-    this._hp = fd.hp
-    this.maxHp = fd.hp
-    this._atk = fd.atk
+    this._hp = this.maxHp = fd.hp
+    this.baseAtk = this._atk = fd.atk
     this.price = fd.price
     this.interval = fd.interval
     this.name = name
-    this._row = row
+    this.row = row
     this
       .setDepth(10)
       .setActive(false)
@@ -44,10 +44,6 @@ export class Frog extends Organism {
 
   get atk(): number {
     return this._atk
-  }
-
-  get row(): number {
-    return this._row
   }
 
   get nameInfo(): string {
@@ -78,7 +74,7 @@ export class Frog extends Organism {
     this.changeGoldTween(`-${this.price}G`, "crimson")
     this.grade++
     this.price = this.upgradePrice
-    this._atk += this._atk
+    this._atk += this.baseAtk
   }
 
   private calcUpgradePrice(): number {
