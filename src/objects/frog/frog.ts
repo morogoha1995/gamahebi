@@ -50,20 +50,28 @@ export class Frog extends Organism {
     return this._row
   }
 
-  canAttack(snakeCol: number): boolean {
-    return snakeCol === this.col && this.nextAttack <= this.scene.time.now && this.active
-  }
-
-  protected calcNextAttack() {
-    this.nextAttack = this.scene.time.now + this.interval
-  }
-
   get nameInfo(): string {
     return this.grade === 1 ? this.jaName : `${this.jaName} +${this.grade - 1}`
   }
 
   get hpInfo(): string {
     return `HP:${this._hp}/${this.maxHp}`
+  }
+
+  get upgradePrice(): number {
+    return this.calcUpgradePrice()
+  }
+
+  get sellPrice(): number {
+    return this.calcSellPrice()
+  }
+
+  canAttack(snakeCol: number): boolean {
+    return snakeCol === this.col && this.nextAttack <= this.scene.time.now && this.active
+  }
+
+  protected calcNextAttack() {
+    this.nextAttack = this.scene.time.now + this.interval
   }
 
   upgrade() {
@@ -73,10 +81,6 @@ export class Frog extends Organism {
     this._atk *= this.grade
   }
 
-  get upgradePrice(): number {
-    return this.calcUpgradePrice()
-  }
-
   private calcUpgradePrice(): number {
     return this.price * this.grade
   }
@@ -84,10 +88,6 @@ export class Frog extends Organism {
   sell() {
     this.changeGoldTween(`+${this.price}G`, "orange")
     this.destroy()
-  }
-
-  get sellPrice(): number {
-    return this.calcSellPrice()
   }
 
   private calcSellPrice(): number {
