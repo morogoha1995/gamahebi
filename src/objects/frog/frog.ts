@@ -4,12 +4,12 @@ import { Organism } from "../organism"
 
 export class Frog extends Organism {
   name: FrogName
-  readonly jaName: string
-  readonly maxHp: number
+  private readonly jaName: string
+  private readonly maxHp: number
   private _atk: number
   private price: number
   private interval: number
-  readonly row: number
+  private readonly _row: number
 
   private grade = 1
   private nextAttack = 0
@@ -25,7 +25,7 @@ export class Frog extends Organism {
     this.price = fd.price
     this.interval = fd.interval
     this.name = name
-    this.row = row
+    this._row = row
     this
       .setDepth(10)
       .setActive(false)
@@ -44,6 +44,10 @@ export class Frog extends Organism {
 
   get atk(): number {
     return this._atk
+  }
+
+  get row(): number {
+    return this._row
   }
 
   canAttack(snakeCol: number): boolean {
