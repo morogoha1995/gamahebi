@@ -78,7 +78,7 @@ export class Frog extends Organism {
     this.changeGoldTween(`-${this.price}G`, "crimson")
     this.grade++
     this.price = this.upgradePrice
-    this._atk *= this.grade
+    this._atk += this._atk
   }
 
   private calcUpgradePrice(): number {
