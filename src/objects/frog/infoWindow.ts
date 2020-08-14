@@ -1,6 +1,7 @@
 import { HALF_HEIGHT, HALF_WIDTH } from "../../constants"
 import { createFontStyle } from "../../utils"
 import { TweenName } from "../../../types/infoWindow"
+import { FrogName } from "../../../types/frog"
 
 export class InfoWindow extends Phaser.GameObjects.Container {
   private _isOpen = false
@@ -113,37 +114,41 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     })
   }
 
-  setInfo(x: number, y: number, name: string, price: number, sellPrice: number, hp: string) {
+  private setBtnText(x: number, text: string, color: string, bgColor: string): Phaser.GameObjects.Text {
+    return this.scene.add.text(x, 80, text, createFontStyle(color, 1.5))
+      .setInteractive()
+      .setBackgroundColor(bgColor)
+      .setPadding(6, 6, 6, 6)
+      .setOrigin(0.5)
+  }
+
+  setInfo(name: FrogName, x: number, y: number, nameInfo: string, price: number, sellPrice: number, hp: string) {
     this.baseX = x
     this.baseY = y
     this.setPosition(x, y)
 
-    const btnY = 80
-
-    this.title = this.scene.add.text(0, -80, name, createFontStyle("teal", 2))
+    this.title = this.scene.add.text(0, -80, nameInfo, createFontStyle("teal", 2))
       .setOrigin(0.5)
 
     this.hp = this.scene.add.text(0, 0, hp, createFontStyle("crimson", 1.5))
       .setOrigin(0.5)
 
-    this.upgradeText = this.scene.add.text(-120, btnY, `強化: ${price}G`, createFontStyle("red", 1.5))
-      .setInteractive()
-      .setBackgroundColor("blue")
-      .setPadding(6, 6, 6, 6)
-      .setOrigin(0.5)
+    const isShield = name === "shield",
+      sellBtnX = isShield ? 0 : 120,
+      btnY = 80
 
-    this.sellText = this.scene.add.text(120, btnY, `売却: ${sellPrice}G`, createFontStyle("blue", 1.5))
-      .setInteractive()
-      .setPadding(6, 6, 6, 6)
-      .setBackgroundColor("green")
-      .setOrigin(0.5)
+    this.sellText = this.setBtnText(sellBtnX, `売却: ${sellPrice}G`, "blue", "green")
 
     this.add([
       this.title,
       this.hp,
-      this.upgradeText,
       this.sellText
     ])
+
+    if (!isShield) {
+      this.upgradeText = this.setBtnText(-120, `強化: ${price}G`, "red", "blue")
+      this.add(this.upgradeText)
+    }
   }
 
   tween(name: TweenName) {

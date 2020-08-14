@@ -153,15 +153,17 @@ export class Game extends Phaser.Scene {
 
     this.shop.buy(name)
     let frog: Frog
+    const tCX = tile.getCenterX(),
+      tCY = tile.getCenterY()
 
     if (name === "rapid")
-      frog = new Rapid(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
+      frog = new Rapid(this, tCX, tCY, tY, tX)
     else if (name === "frozen")
-      frog = new Frozen(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
+      frog = new Frozen(this, tCX, tCY, tY, tX)
     else if (name === "shield")
-      frog = new Shield(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
+      frog = new Shield(this, tCX, tCY, tY, tX)
     else
-      frog = new Pistol(this, tile.getCenterX(), tile.getCenterY(), tY, tX)
+      frog = new Pistol(this, tCX, tCY, tY, tX)
 
     frog.on("pointerdown", () => {
       if (this.infoWindow.isOpen)
@@ -171,6 +173,7 @@ export class Game extends Phaser.Scene {
         sellPrice = frog.sellPrice
 
       this.infoWindow.setInfo(
+        name,
         frog.x,
         frog.y,
         frog.nameInfo,
