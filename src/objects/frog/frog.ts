@@ -55,11 +55,11 @@ export class Frog extends Organism {
   }
 
   get upgradePrice(): number {
-    return this.calcUpgradePrice()
+    return this.price * this.grade
   }
 
   get sellPrice(): number {
-    return this.calcSellPrice()
+    return Math.floor(this.price / 2)
   }
 
   canAttack(snakeCol: number): boolean {
@@ -77,17 +77,9 @@ export class Frog extends Organism {
     this._atk += this.baseAtk
   }
 
-  private calcUpgradePrice(): number {
-    return this.price * this.grade
-  }
-
   sell() {
-    this.changeGoldTween(`+${this.price}G`, "orange")
+    this.changeGoldTween(`+${this.sellPrice}G`, "orange")
     this.destroy()
-  }
-
-  private calcSellPrice(): number {
-    return Math.floor(this.price / 2)
   }
 
   attack(bulletGroup: Phaser.GameObjects.Group) {

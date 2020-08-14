@@ -204,7 +204,7 @@ export class Game extends Phaser.Scene {
 
           this.shop.addGold(sellPrice)
           this.field.destroyFrog(frog.row, frog.col)
-          frog.destroy()
+          frog.sell()
           this.infoWindow.tween("sell")
         })
     })
