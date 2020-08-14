@@ -1,1 +1,1 @@
-export type TweenName = "open" | "close" | "upgrade" | "sell"
+export type TweenName = "open" | "close" | "upgrade" | "sell" | "notEnoughGold"

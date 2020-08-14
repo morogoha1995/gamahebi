@@ -68,7 +68,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     })
   }
 
-  private btnTween(btnName: string) {
+  private btnPushTween(btnName: string) {
     const btn = btnName === "upgrade" ? this.upgradeText : this.sellText
 
     this.scene.add.tween({
@@ -85,18 +85,18 @@ export class InfoWindow extends Phaser.GameObjects.Container {
 
   private upgradeTween() {
     // this.scene.sound.play("upgrade")
-    this.btnTween("upgrade")
+    this.btnPushTween("upgrade")
   }
 
   private sellTween() {
     // this.scene.sound.play("sell")
-    this.btnTween("sell")
+    this.btnPushTween("sell")
   }
 
   private textTween(text: string) {
     // this.scene.sound.play("notEnough")
 
-    const t = this.scene.add.text(0, 0, text, createFontStyle("#202020"))
+    const t = this.scene.add.text(0, 0, text, createFontStyle("#202020", 2))
       .setOrigin(0.5)
       .setAngle(-5)
 
@@ -104,7 +104,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
 
     this.scene.add.tween({
       targets: t,
-      duration: 200,
+      duration: 300,
       angle: 5,
       yoyo: true,
       onComplete: () => {
@@ -134,8 +134,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
       .setOrigin(0.5)
 
     const isShield = name === "shield",
-      sellBtnX = isShield ? 0 : 120,
-      btnY = 80
+      sellBtnX = isShield ? 0 : 120
 
     this.sellText = this.setBtnText(sellBtnX, `売却: ${sellPrice}G`, "blue", "green")
 

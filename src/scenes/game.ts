@@ -192,6 +192,8 @@ export class Game extends Phaser.Scene {
             this.infoWindow.tween("upgrade")
             this.shop.upgrade(upgradePrice)
             frog.upgrade()
+          } else {
+            this.infoWindow.tween("notEnoughGold")
           }
         })
 
