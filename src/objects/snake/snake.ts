@@ -65,7 +65,7 @@ export class Snake extends Organism {
   }
 
   private checkTouchBottom() {
-    this._isTouchBottom = this.y >= HEIGHT
+    this._isTouchBottom = this.y >= HEIGHT && !this._isAttack
   }
 
   attack() {
