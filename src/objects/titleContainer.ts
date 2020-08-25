@@ -66,8 +66,8 @@ export class TitleContainer extends Phaser.GameObjects.Container {
     this.addBtn("音", x, y, "salmon", "darkorange", () => {
       this._isMute = !this._isMute
       xMark.setVisible(this._isMute)
-      //if (!this._isMute)
-      // this.scene.sound.play("buy")
+      if (!this._isMute)
+        this.scene.sound.play("btn")
     })
 
     this.add(xMark)

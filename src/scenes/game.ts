@@ -154,6 +154,7 @@ export class Game extends Phaser.Scene {
 
     this.sound.play("buy")
     this.shop.buy(name)
+
     let frog: Frog
     const tCX = tile.getCenterX(),
       tCY = tile.getCenterY()
