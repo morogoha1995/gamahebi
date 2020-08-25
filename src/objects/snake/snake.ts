@@ -95,6 +95,8 @@ export class Snake extends Organism {
   damaged(atk: number, name: string) {
     super.damaged(atk, name)
 
+    this.scene.sound.play("attack")
+
     if (name === "frozen")
       this.toSlow()
 
@@ -120,6 +122,7 @@ export class Snake extends Organism {
   }
 
   getGold(): number {
+    this.scene.sound.play("earn")
     this.earnTween()
     return this.earn
   }

@@ -84,18 +84,14 @@ export class InfoWindow extends Phaser.GameObjects.Container {
   }
 
   private upgradeTween() {
-    // this.scene.sound.play("upgrade")
     this.btnPushTween("upgrade")
   }
 
   private sellTween() {
-    // this.scene.sound.play("sell")
     this.btnPushTween("sell")
   }
 
   private textTween(text: string) {
-    // this.scene.sound.play("notEnough")
-
     const t = this.scene.add.text(0, 0, text, createFontStyle("#202020", 2))
       .setOrigin(0.5)
       .setAngle(-5)
@@ -156,14 +152,22 @@ export class InfoWindow extends Phaser.GameObjects.Container {
 
     this._inAnims = true
 
-    if (name === "open")
+    if (name === "open") {
+      this.scene.sound.play("btn")
       this.openTween()
-    else if (name === "close")
+    }
+    else if (name === "close") {
+      this.scene.sound.play("btn")
       this.closeTween()
-    else if (name === "upgrade")
+    }
+    else if (name === "upgrade") {
+      this.scene.sound.play("buy")
       this.upgradeTween()
-    else if (name === "sell")
+    }
+    else if (name === "sell") {
+      this.scene.sound.play("earn")
       this.sellTween()
+    }
     else if (name === "notEnoughGold")
       this.textTween("ゴールドが足りません")
   }

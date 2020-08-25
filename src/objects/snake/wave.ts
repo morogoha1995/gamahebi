@@ -50,6 +50,7 @@ export class Wave {
   private goNext() {
     this.isInNextDelay = true
     this._current++
+    this.scene.sound.play("wave")
 
     this.waveTextTween()
   }

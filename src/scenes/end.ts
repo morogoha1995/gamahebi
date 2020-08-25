@@ -13,20 +13,14 @@ export class End extends Phaser.Scene {
   }
 
   create() {
-    //this.sound.play("death")
-
-    this.createEndWindow()
-  }
-
-  private createEndWindow() {
     const endWindow = new TitleContainer(this, "陥落...", "crimson", this.sound.mute)
 
-    endWindow.addStartBtn("もう一回", () =>
+    endWindow.addStartBtn("もう一回", () => {
       this.scene.start("game", {
         isPlaying: true,
         isMute: endWindow.isMute
       })
-    )
+    })
 
     endWindow.addTweetBtn(() => this.tweet())
   }

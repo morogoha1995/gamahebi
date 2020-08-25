@@ -21,6 +21,13 @@ export class Boot extends Phaser.Scene {
       .image("hole", "assets/imgs/hole.png")
       .image("pond", "assets/imgs/pond.png")
       .spritesheet("tiles", "assets/imgs/tiles.png", { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE })
+      .audio("start", "assets/audios/start.mp3")
+      .audio("attack", "assets/audios/attack.mp3")
+      .audio("btn", "assets/audios/btn.mp3")
+      .audio("buy", "assets/audios/buy.mp3")
+      .audio("earn", "assets/audios/earn.mp3")
+      .audio("wave", "assets/audios/wave.mp3")
+      .audio("dead", "assets/audios/dead.mp3")
   }
 
   create() {

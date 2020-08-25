@@ -84,6 +84,7 @@ export class Game extends Phaser.Scene {
   }
 
   private gameover() {
+    this.sound.play("dead")
     this.scene.pause()
     this.scene.launch("end", {
       isMute: this.sound.mute,
@@ -151,6 +152,7 @@ export class Game extends Phaser.Scene {
     if (!this.field.canPutFrog(tY, tX))
       return
 
+    this.sound.play("buy")
     this.shop.buy(name)
     let frog: Frog
     const tCX = tile.getCenterX(),

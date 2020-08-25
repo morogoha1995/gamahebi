@@ -45,6 +45,8 @@ export class TitleContainer extends Phaser.GameObjects.Container {
 
       this.isClosing = true
 
+      this.scene.sound.play("start")
+
       this.scene.add.tween({
         targets: this,
         duration: 500,
