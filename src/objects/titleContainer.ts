@@ -89,7 +89,7 @@ export class TitleContainer extends Phaser.GameObjects.Container {
         duration: 50,
         scale: 0.9,
         yoyo: true,
-        onComplete: fn
+        onComplete: fn()
       }))
 
     this.add(btn)

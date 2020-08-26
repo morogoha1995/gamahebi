@@ -1,4 +1,4 @@
-import { HALF_HEIGHT, HALF_WIDTH } from "../../constants"
+import { HALF_HEIGHT, HALF_WIDTH, notEnoughTween } from "../../constants"
 import { createFontStyle } from "../../utils"
 import { TweenName } from "../../../types/infoWindow"
 import { FrogName } from "../../../types/frog"
@@ -91,25 +91,6 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     this.btnPushTween("sell")
   }
 
-  private textTween(text: string) {
-    const t = this.scene.add.text(0, 0, text, createFontStyle("#202020", 2))
-      .setOrigin(0.5)
-      .setAngle(-5)
-
-    this.add(t)
-
-    this.scene.add.tween({
-      targets: t,
-      duration: 300,
-      angle: 5,
-      yoyo: true,
-      onComplete: () => {
-        this.remove(t, true)
-        this.closeTween()
-      }
-    })
-  }
-
   private setBtnText(x: number, text: string, color: string, bgColor: string): Phaser.GameObjects.Text {
     return this.scene.add.text(x, 80, text, createFontStyle(color, 1.5))
       .setInteractive()
@@ -169,7 +150,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
       this.sellTween()
     }
     else if (name === "notEnoughGold")
-      this.textTween("ゴールドが足りません")
+      notEnoughTween(this.scene, () => this.closeTween())
   }
 
 

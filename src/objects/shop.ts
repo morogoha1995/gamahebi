@@ -1,6 +1,6 @@
 import frogDatas from "../datas/frog.json"
 import { Frogs, FrogName } from "../../types/frog"
-import { SIDE_BAR_WIDTH } from "../constants"
+import { SIDE_BAR_WIDTH, notEnoughTween } from "../constants"
 import { createFontStyle } from "../utils"
 
 export class Shop {
@@ -78,10 +78,6 @@ export class Shop {
 
   // TODO
   notEnough(scene: Phaser.Scene) {
-    const text = scene.add.text
-
-    scene.add.tween({
-
-    })
+    notEnoughTween(scene, () => { })
   }
 }
