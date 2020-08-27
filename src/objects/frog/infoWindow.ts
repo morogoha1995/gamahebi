@@ -1,7 +1,8 @@
-import { HALF_HEIGHT, HALF_WIDTH, notEnoughTween } from "../../constants"
+import { HALF_HEIGHT, HALF_WIDTH } from "../../constants"
 import { createFontStyle } from "../../utils"
 import { TweenName } from "../../../types/infoWindow"
 import { FrogName } from "../../../types/frog"
+import { TextTweenManager } from "../textTweenManager"
 
 export class InfoWindow extends Phaser.GameObjects.Container {
   private _isOpen = false
@@ -12,6 +13,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
   private hp: Phaser.GameObjects.Text
   private upgradeText: Phaser.GameObjects.Text
   private sellText: Phaser.GameObjects.Text
+  private textTweenManager: TextTweenManager
 
   constructor(scene: Phaser.Scene) {
     super(scene)
@@ -31,6 +33,8 @@ export class InfoWindow extends Phaser.GameObjects.Container {
           .setInteractive()
           .on("pointerdown", () => this.tween("close"))
       ])
+
+    this.textTweenManager = new TextTweenManager(scene)
 
     scene.add.existing(this)
   }
@@ -150,7 +154,7 @@ export class InfoWindow extends Phaser.GameObjects.Container {
       this.sellTween()
     }
     else if (name === "notEnoughGold")
-      notEnoughTween(this.scene, () => this.closeTween())
+      this.textTweenManager.do("ゴールドが足りません", () => this.closeTween())
   }
 
 

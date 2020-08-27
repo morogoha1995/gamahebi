@@ -1,12 +1,14 @@
 import frogDatas from "../datas/frog.json"
 import { Frogs, FrogName } from "../../types/frog"
-import { SIDE_BAR_WIDTH, notEnoughTween } from "../constants"
+import { SIDE_BAR_WIDTH } from "../constants"
 import { createFontStyle } from "../utils"
+import { TextTweenManager } from "./textTweenManager"
 
 export class Shop {
   private gold = 30
   private frogs: Frogs = {}
   private goldText: Phaser.GameObjects.Text
+  private textTweenManager: TextTweenManager
 
   constructor(scene: Phaser.Scene) {
     const fds: any = frogDatas,
@@ -38,6 +40,8 @@ export class Shop {
       }
       y += height + padding
     }
+
+    this.textTweenManager = new TextTweenManager(scene)
   }
 
   canBuy(value: number): boolean {
@@ -76,8 +80,7 @@ export class Shop {
     return this.frogs
   }
 
-  // TODO
-  notEnough(scene: Phaser.Scene) {
-    notEnoughTween(scene, () => { })
+  notEnough() {
+    this.textTweenManager.do("ゴールドが足りません")
   }
 }
