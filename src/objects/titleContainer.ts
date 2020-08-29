@@ -5,6 +5,7 @@ import { createFontStyle } from "../utils"
 export class TitleContainer extends Phaser.GameObjects.Container {
   private _isMute: boolean
   private isClosing = false
+  private isBtnPushing = false
 
   constructor(scene: Phaser.Scene, text: string, color: string, isMute: boolean) {
     super(scene, HALF_WIDTH, HALF_HEIGHT)
@@ -84,13 +85,23 @@ export class TitleContainer extends Phaser.GameObjects.Container {
       .setPadding(6, 6, 6, 6)
       .setBackgroundColor(bgColor)
       .setInteractive()
-      .on("pointerdown", () => this.scene.add.tween({
-        targets: btn,
-        duration: 50,
-        scale: 0.9,
-        yoyo: true,
-        onComplete: fn()
-      }))
+      .on("pointerdown", () => {
+        if (this.isBtnPushing || this.isClosing)
+          return
+
+        this.isBtnPushing = true
+
+        this.scene.add.tween({
+          targets: btn,
+          duration: 50,
+          scale: 0.9,
+          yoyo: true,
+          onComplete: () => {
+            this.isBtnPushing = false
+            fn()
+          }
+        })
+      })
 
     this.add(btn)
   }

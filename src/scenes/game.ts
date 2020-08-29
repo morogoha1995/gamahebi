@@ -144,14 +144,18 @@ export class Game extends Phaser.Scene {
 
     const tile = this.field.layer.getTileAtWorldXY(x, y)
 
-    if (!tile)
+    if (!tile) {
+      this.sound.play("outside")
       return
+    }
 
     const tX = tile.x,
       tY = tile.y
 
-    if (!this.field.canPutFrog(tY, tX))
+    if (!this.field.canPutFrog(tY, tX)) {
+      this.sound.play("outside")
       return
+    }
 
     this.sound.play("buy")
     this.shop.buy(name)

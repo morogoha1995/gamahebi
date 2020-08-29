@@ -149,9 +149,8 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     } else if (name === "sell") {
       this.scene.sound.play("earn")
       this.sellTween()
-    } else if (name === "notEnoughGold") {
+    } else if (name === "notEnoughGold")
       this.textTweenManager.do("ゴールドが足りず\n強化できません", "notEnough", () => this.closeTween())
-    }
   }
 
 
