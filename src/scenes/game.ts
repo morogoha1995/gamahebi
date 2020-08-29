@@ -8,7 +8,6 @@ import { Pistol } from "../objects/frog/pistol"
 import { Rapid } from "../objects/frog/rapid"
 import { Frozen } from "../objects/frog/frozen"
 import { TitleContainer } from "../objects/titleContainer"
-import { WIDTH, HEIGHT, notEnoughTween } from "../constants"
 import { Shield } from "../objects/frog/shield"
 
 export class Game extends Phaser.Scene {
@@ -94,7 +93,7 @@ export class Game extends Phaser.Scene {
 
   private selectFrog(name: FrogName, x: number, y: number) {
     if (!this.shop.canBuyFrog(name)) {
-      notEnoughTween(this)
+      this.shop.notEnough()
       return
     }
 

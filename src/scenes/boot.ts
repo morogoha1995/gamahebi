@@ -28,6 +28,7 @@ export class Boot extends Phaser.Scene {
       .audio("earn", "assets/audios/earn.mp3")
       .audio("wave", "assets/audios/wave.mp3")
       .audio("dead", "assets/audios/dead.mp3")
+      .audio("notEnough", "assets/audios/not_enough.mp3")
   }
 
   create() {

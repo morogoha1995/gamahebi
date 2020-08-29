@@ -140,21 +140,18 @@ export class InfoWindow extends Phaser.GameObjects.Container {
     if (name === "open") {
       this.scene.sound.play("btn")
       this.openTween()
-    }
-    else if (name === "close") {
+    } else if (name === "close") {
       this.scene.sound.play("btn")
       this.closeTween()
-    }
-    else if (name === "upgrade") {
+    } else if (name === "upgrade") {
       this.scene.sound.play("buy")
       this.upgradeTween()
-    }
-    else if (name === "sell") {
+    } else if (name === "sell") {
       this.scene.sound.play("earn")
       this.sellTween()
+    } else if (name === "notEnoughGold") {
+      this.textTweenManager.do("ゴールドが足りず\n強化できません", "notEnough", () => this.closeTween())
     }
-    else if (name === "notEnoughGold")
-      this.textTweenManager.do("ゴールドが足りません", () => this.closeTween())
   }
 
 

@@ -81,6 +81,6 @@ export class Shop {
   }
 
   notEnough() {
-    this.textTweenManager.do("ゴールドが足りません")
+    this.textTweenManager.do("ゴールドが足りず\n購入できません", "notEnough")
   }
 }

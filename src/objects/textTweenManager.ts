@@ -9,11 +9,13 @@ export class TextTweenManager {
     this.scene = scene
   }
 
-  do(text: string, fn?: Function) {
+  do(text: string, soundName: string, fn?: Function) {
     if (this.isAnims)
       return
 
     this.isAnims = true
+
+    this.scene.sound.play(soundName)
 
     const t = this.scene.add.text(HALF_WIDTH, HALF_HEIGHT - 30, text, createFontStyle("#202020", 2))
       .setOrigin(0.5)
