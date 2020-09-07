@@ -5,20 +5,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" href="">
+  <link rel="icon" href="assets/imgs/frog/pistol.png">
   <title>がまへび合戦</title>
 
   <meta name="twitter:site" content="@morogoha1995" />
   <meta name="twitter:card" content="summary" />
-  <meta property="og:url" content="https://meisoudev.com/games/house-defense2/">
-  <meta property="og:title" content="家防衛2">
-  <meta property="og:description" content="兵器を設置して敵の侵攻を防ぐタワーディフェンスゲーム">
-  <meta property="og:image" content="https://meisoudev.com/games/house-defense2/assets/imgs/card.jpg">
+  <meta property="og:url" content="https://meisoudev.com/games/gamahebi/">
+  <meta property="og:title" content="がまへび合戦">
+  <meta property="og:description" content="ガマを設置して蛇の進行を止めるゲーム">
+  <meta property="og:image" content="https://meisoudev.com/games/gamahebi/assets/imgs/card.jpg">
 
   <style>
     body {
       max-width: 100%;
-      font-size: 14px;
+      font-size: 16px;
       font-family: Meiryo, sans-serif;
       margin: 0;
       padding: 0;
@@ -28,6 +28,10 @@
 
     #app {
       text-align: left;
+    }
+
+    #set-btn {
+      font-size: 1.2rem;
     }
 
     .text,
@@ -47,7 +51,7 @@
 
     @media screen and (min-width:768px) {
       body {
-        font-size: 16px;
+        font-size: 18px;
       }
     }
 
@@ -56,20 +60,22 @@
 
 <body>
   <h1>がまへび合戦</h1>
-  <p>開発中</p>
-  <a href="#app">画面を合わせる</a>
+  <p>ガマを設置して蛇の進行をくい止めてください。</p>
+  <a id="set-btn" href="#app">ゲーム画面に合わせる</a>
   <div id="app"></div>
   <h2>説明</h2>
   <ul class="how-to-list">
-
+    <li>蛇が画面下に到達するとゲームオーバーです。</li>
+    <li>蛇を倒すとゴールドが得られます。</li>
+    <li>ゴールドを消費して画面左のガマ一覧からガマを購入できます。</li>
+    <li>ゲームオーバーになるまでゲームは終わりません。</li>
   </ul>
   <h3>ガマの種類</h3>
   <ul class="how-to-list">
     <li>鉄砲ガマ: 2秒毎に水鉄砲を発射する</li>
     <li>連射ガマ: 3秒毎に水鉄砲を3発で連射する</li>
-    <li>泥ガマ: 2秒毎に敵の動きを遅くする泥を発射する</li>
-    <li>壁ガマ: HPが高く、敵の足止めになる。攻撃はしない</li>
-    <li>ボムガマ: 2秒毎に広範囲に爆発するボムを発射する</li>
+    <li>氷ガマ: 2秒毎に敵の動きを遅くする泥を発射する</li>
+    <li>盾ガマ: 攻撃はしない。HPが高く、敵の足止めになる</li>
   </ul>
   <footer id="footer">
     <div>
