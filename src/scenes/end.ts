@@ -26,10 +26,10 @@ export class End extends Phaser.Scene {
   }
 
   private tweet() {
-    const url = "https://meisoudev.com/games/house-defense2/"
-    const text = `Wave ${this.wave}にて陥落。`
+    const url = "https://meisoudev.com/games/gamahebi/"
+    const text = `第${this.wave}波にて陥落…。`
 
-    const tweetURL = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=家防衛2`
+    const tweetURL = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=がまへび合戦`
 
     window.open(tweetURL, "blank")
   }
